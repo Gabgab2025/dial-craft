@@ -2,131 +2,133 @@
 @tailwind components;
 @tailwind utilities;
 
-/* SecureCall CRM Design System - 2025 Modern Banking UI
-Primary: Deep Navy, Accent: Electric Teal, Base: Silver Gray
+/* SecureCall CRM Design System - 2025 Modern Professional UI
+Based on sophisticated charcoal-to-gold gradient palette
 All colors MUST be HSL. Features glassmorphism and micro-interactions.
 */
 
 @layer base {
   :root {
-    /* Core Brand Colors */
-    --primary: 213 92% 9%;         /* Deep Navy #0D1B2A */
-    --primary-foreground: 0 0% 98%;
-    --accent: 173 91% 53%;         /* Electric Teal #14F1D9 */
-    --accent-foreground: 213 92% 9%;
+    /* Core Brand Colors - From Reference Image */
+    --primary: 210 15% 18%;        /* Dark Charcoal */
+    --primary-foreground: 45 50% 96%;
+    --accent: 50 100% 65%;         /* Vibrant Gold */
+    --accent-foreground: 210 15% 18%;
     
-    /* Backgrounds - Silver/Glass Theme */
-    --background: 240 17% 98%;     /* Silver White #F5F5F7 */
-    --foreground: 213 92% 9%;
-    --glass: 240 17% 98% / 0.8;    /* Glass effect base */
-    --glass-border: 173 91% 53% / 0.2;
+    /* Backgrounds - Warm Cream Theme */
+    --background: 45 50% 96%;      /* Light Cream */
+    --foreground: 210 15% 18%;
+    --glass: 45 50% 96% / 0.8;     /* Glass effect base */
+    --glass-border: 50 100% 65% / 0.2;
     
     /* Surface Colors */
-    --card: 240 17% 98% / 0.9;
-    --card-foreground: 213 92% 9%;
-    --popover: 240 17% 98% / 0.95;
-    --popover-foreground: 213 92% 9%;
+    --card: 45 30% 94% / 0.9;
+    --card-foreground: 210 15% 18%;
+    --popover: 45 30% 94% / 0.95;
+    --popover-foreground: 210 15% 18%;
     
-    /* Interactive States */
-    --secondary: 213 20% 85%;
-    --secondary-foreground: 213 92% 9%;
-    --muted: 213 15% 92%;
-    --muted-foreground: 213 30% 45%;
+    /* Interactive States - Gray Scale from Image */
+    --secondary: 210 8% 75%;       /* Medium Gray */
+    --secondary-foreground: 210 15% 18%;
+    --muted: 210 8% 88%;           /* Light Gray */
+    --muted-foreground: 210 12% 45%;
     
-    /* Status Colors - Banking Compliant */
-    --success: 142 76% 42%;        /* Success Green #16C79A */
-    --warning: 39 100% 52%;        /* Warning Amber #FFB703 */
-    --destructive: 351 95% 69%;    /* Error Pink #EF476F */
-    --destructive-foreground: 0 0% 98%;
+    /* Status Colors - Professional Palette */
+    --success: 120 60% 50%;        /* Success Green */
+    --warning: 30 100% 65%;        /* Warm Orange from image */
+    --destructive: 0 70% 55%;      /* Professional Red */
+    --destructive-foreground: 45 50% 96%;
     
     /* Form Elements */
-    --border: 213 20% 88%;
-    --input: 240 17% 98% / 0.9;
-    --ring: 173 91% 53%;
+    --border: 210 8% 85%;
+    --input: 45 30% 94% / 0.9;
+    --ring: 50 100% 65%;
     
     /* Glass Morphism Effects */
-    --glass-light: 240 17% 98% / 0.7;
-    --glass-medium: 240 17% 95% / 0.8;
-    --glass-dark: 213 20% 85% / 0.9;
+    --glass-light: 45 40% 92% / 0.7;
+    --glass-medium: 45 30% 90% / 0.8;
+    --glass-dark: 210 8% 80% / 0.9;
     
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(213 92% 9%), hsl(213 80% 15%));
-    --gradient-accent: linear-gradient(135deg, hsl(173 91% 53%), hsl(173 80% 60%));
-    --gradient-glass: linear-gradient(135deg, hsla(240, 17%, 98%, 0.9), hsla(240, 17%, 95%, 0.7));
+    /* Gradients - Based on Reference Image */
+    --gradient-primary: linear-gradient(135deg, hsl(210 15% 18%), hsl(210 12% 25%));
+    --gradient-accent: linear-gradient(135deg, hsl(50 100% 65%), hsl(30 100% 65%));
+    --gradient-glass: linear-gradient(135deg, hsla(45, 50%, 96%, 0.9), hsla(45, 30%, 90%, 0.7));
+    --gradient-warm: linear-gradient(135deg, hsl(50 100% 65%), hsl(30 100% 65%), hsl(45 50% 85%));
     
     /* Shadows */
-    --shadow-glass: 0 8px 32px hsla(213, 92%, 9%, 0.12);
-    --shadow-accent: 0 4px 16px hsla(173, 91%, 53%, 0.25);
-    --shadow-soft: 0 2px 8px hsla(213, 20%, 20%, 0.08);
+    --shadow-glass: 0 8px 32px hsla(210, 15%, 18%, 0.12);
+    --shadow-accent: 0 4px 16px hsla(50, 100%, 65%, 0.25);
+    --shadow-soft: 0 2px 8px hsla(210, 8%, 20%, 0.08);
     
     --radius: 0.75rem;
     
-    /* Sidebar Theme */
-    --sidebar-background: 213 92% 9% / 0.95;
-    --sidebar-foreground: 240 17% 98%;
-    --sidebar-primary: 173 91% 53%;
-    --sidebar-primary-foreground: 213 92% 9%;
-    --sidebar-accent: 213 80% 15% / 0.8;
-    --sidebar-accent-foreground: 240 17% 98%;
-    --sidebar-border: 173 91% 53% / 0.2;
-    --sidebar-ring: 173 91% 53%;
+    /* Sidebar Theme - Charcoal Base */
+    --sidebar-background: 210 15% 18% / 0.95;
+    --sidebar-foreground: 45 50% 96%;
+    --sidebar-primary: 50 100% 65%;
+    --sidebar-primary-foreground: 210 15% 18%;
+    --sidebar-accent: 210 12% 25% / 0.8;
+    --sidebar-accent-foreground: 45 50% 96%;
+    --sidebar-border: 50 100% 65% / 0.2;
+    --sidebar-ring: 50 100% 65%;
   }
 
   .dark {
-    /* Dark Mode - Deep Navy Base with Teal Accents */
-    --background: 213 92% 5%;      /* Darker Navy */
-    --foreground: 240 17% 98%;
-    --glass: 213 80% 8% / 0.8;
-    --glass-border: 173 91% 53% / 0.3;
+    /* Dark Mode - Rich Charcoal with Gold Accents */
+    --background: 210 15% 8%;      /* Darker Charcoal */
+    --foreground: 45 40% 90%;
+    --glass: 210 15% 8% / 0.8;
+    --glass-border: 50 100% 65% / 0.3;
     
-    --card: 213 80% 8% / 0.9;
-    --card-foreground: 240 17% 98%;
-    --popover: 213 80% 8% / 0.95;
-    --popover-foreground: 240 17% 98%;
+    --card: 210 15% 12% / 0.9;
+    --card-foreground: 45 40% 90%;
+    --popover: 210 15% 12% / 0.95;
+    --popover-foreground: 45 40% 90%;
     
-    --primary: 173 91% 53%;        /* Electric Teal in dark */
-    --primary-foreground: 213 92% 9%;
-    --accent: 173 80% 60%;
-    --accent-foreground: 213 92% 9%;
+    --primary: 50 100% 65%;        /* Gold in dark mode */
+    --primary-foreground: 210 15% 8%;
+    --accent: 30 100% 65%;         /* Warm orange accent */
+    --accent-foreground: 210 15% 8%;
     
-    --secondary: 213 50% 15%;
-    --secondary-foreground: 240 17% 98%;
-    --muted: 213 40% 12%;
-    --muted-foreground: 213 20% 70%;
+    --secondary: 210 8% 25%;       /* Dark gray */
+    --secondary-foreground: 45 40% 90%;
+    --muted: 210 8% 20%;
+    --muted-foreground: 210 8% 65%;
     
-    --success: 142 76% 42%;
-    --warning: 39 100% 52%;
-    --destructive: 351 95% 69%;
-    --destructive-foreground: 240 17% 98%;
+    --success: 120 60% 50%;
+    --warning: 30 100% 65%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 45 40% 90%;
     
-    --border: 213 40% 18%;
-    --input: 213 80% 8% / 0.9;
-    --ring: 173 91% 53%;
+    --border: 210 8% 25%;
+    --input: 210 15% 12% / 0.9;
+    --ring: 50 100% 65%;
     
     /* Dark Glass Effects */
-    --glass-light: 213 80% 8% / 0.7;
-    --glass-medium: 213 60% 12% / 0.8;
-    --glass-dark: 213 40% 18% / 0.9;
+    --glass-light: 210 15% 12% / 0.7;
+    --glass-medium: 210 12% 15% / 0.8;
+    --glass-dark: 210 8% 25% / 0.9;
     
     /* Dark Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(213 92% 5%), hsl(213 80% 10%));
-    --gradient-accent: linear-gradient(135deg, hsl(173 91% 53%), hsl(173 80% 45%));
-    --gradient-glass: linear-gradient(135deg, hsla(213, 80%, 8%, 0.9), hsla(213, 60%, 12%, 0.7));
+    --gradient-primary: linear-gradient(135deg, hsl(210 15% 8%), hsl(210 12% 15%));
+    --gradient-accent: linear-gradient(135deg, hsl(50 100% 65%), hsl(30 100% 65%));
+    --gradient-glass: linear-gradient(135deg, hsla(210, 15%, 12%, 0.9), hsla(210, 12%, 15%, 0.7));
+    --gradient-warm: linear-gradient(135deg, hsl(50 100% 65%), hsl(30 100% 65%), hsl(210 8% 25%));
     
     /* Dark Shadows */
-    --shadow-glass: 0 8px 32px hsla(213, 92%, 5%, 0.4);
-    --shadow-accent: 0 4px 16px hsla(173, 91%, 53%, 0.3);
-    --shadow-soft: 0 2px 8px hsla(213, 80%, 5%, 0.2);
+    --shadow-glass: 0 8px 32px hsla(210, 15%, 5%, 0.4);
+    --shadow-accent: 0 4px 16px hsla(50, 100%, 65%, 0.3);
+    --shadow-soft: 0 2px 8px hsla(210, 15%, 5%, 0.2);
     
     /* Dark Sidebar */
-    --sidebar-background: 213 92% 3% / 0.95;
-    --sidebar-foreground: 240 17% 98%;
-    --sidebar-primary: 173 91% 53%;
-    --sidebar-primary-foreground: 213 92% 9%;
-    --sidebar-accent: 213 60% 12% / 0.8;
-    --sidebar-accent-foreground: 240 17% 98%;
-    --sidebar-border: 173 91% 53% / 0.2;
-    --sidebar-ring: 173 91% 53%;
+    --sidebar-background: 210 15% 5% / 0.95;
+    --sidebar-foreground: 45 40% 90%;
+    --sidebar-primary: 50 100% 65%;
+    --sidebar-primary-foreground: 210 15% 8%;
+    --sidebar-accent: 210 12% 15% / 0.8;
+    --sidebar-accent-foreground: 45 40% 90%;
+    --sidebar-border: 50 100% 65% / 0.2;
+    --sidebar-ring: 50 100% 65%;
   }
 }
 
@@ -181,6 +183,10 @@ All colors MUST be HSL. Features glassmorphism and micro-interactions.
     background: var(--gradient-glass);
   }
   
+  .bg-gradient-warm {
+    background: var(--gradient-warm);
+  }
+  
   /* Smooth Animations */
   .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
@@ -198,6 +204,13 @@ All colors MUST be HSL. Features glassmorphism and micro-interactions.
 @layer utilities {
   .text-gradient-accent {
     background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-warm {
+    background: var(--gradient-warm);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
