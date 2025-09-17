@@ -9,6 +9,14 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Accounts from "./pages/Accounts";
+import CallCenter from "./pages/CallCenter";
+import Dispositions from "./pages/Dispositions";
+import UploadData from "./pages/UploadData";
+import Reports from "./pages/Reports";
+import UserManagement from "./pages/UserManagement";
+import Settings from "./pages/Settings";
+import ThreeCXStatus from "./pages/integrations/ThreeCXStatus";
+import DatabaseIntegration from "./pages/integrations/Database";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,14 +59,14 @@ const App = () => {
                   <Route path="/" element={<Navigate to="/dashboard" replace />} />
                   <Route path="/dashboard" element={<Dashboard userRole={user.role} />} />
                   <Route path="/accounts" element={<Accounts />} />
-                  <Route path="/calls" element={<div className="p-6">Call Center page coming soon...</div>} />
-                  <Route path="/dispositions" element={<div className="p-6">Dispositions page coming soon...</div>} />
-                  <Route path="/upload" element={<div className="p-6">Upload Data page coming soon...</div>} />
-                  <Route path="/reports" element={<div className="p-6">Reports page coming soon...</div>} />
-                  <Route path="/users" element={<div className="p-6">User Management page coming soon...</div>} />
-                  <Route path="/settings" element={<div className="p-6">Settings page coming soon...</div>} />
-                  <Route path="/integrations/3cx" element={<div className="p-6">3CX Integration page coming soon...</div>} />
-                  <Route path="/integrations/database" element={<div className="p-6">Database Integration page coming soon...</div>} />
+                  <Route path="/calls" element={<CallCenter />} />
+                  <Route path="/dispositions" element={<Dispositions />} />
+                  <Route path="/upload" element={<UploadData />} />
+                  <Route path="/reports" element={<Reports />} />
+                  <Route path="/users" element={<UserManagement />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/integrations/3cx" element={<ThreeCXStatus />} />
+                  <Route path="/integrations/database" element={<DatabaseIntegration />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </AppLayout>
