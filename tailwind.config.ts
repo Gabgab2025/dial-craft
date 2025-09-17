@@ -13,6 +13,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -46,6 +51,15 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        glass: {
+          DEFAULT: "hsl(var(--glass))",
+          light: "hsl(var(--glass-light))",
+          medium: "hsl(var(--glass-medium))",
+          dark: "hsl(var(--glass-dark))",
+          border: "hsl(var(--glass-border))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
