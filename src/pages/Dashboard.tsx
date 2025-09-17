@@ -5,26 +5,26 @@ import { Button } from "@/components/ui/button"
 import AgentDashboard from "./AgentDashboard"
 import ManagerDashboard from "./ManagerDashboard"
 import { 
-  Users, 
-  Phone, 
   DollarSign, 
-  TrendingUp, 
-  Clock,
-  CheckCircle,
-  AlertCircle,
-  PhoneCall
+  Phone,
+  Users,
+  Target,
+  TrendingUp,
+  ArrowUpRight,
+  ArrowDownRight,
+  Minus
 } from "lucide-react"
 
-interface KPICardProps {
+interface MetricCardProps {
   title: string
   value: string
-  change: string
-  changeType: "positive" | "negative" | "neutral"
-  icon: React.ReactNode
-  description?: string
+  subtitle?: string
+  change?: string
+  changeType?: "positive" | "negative" | "neutral"
+  showViewReport?: boolean
 }
 
-function KPICard({ title, value, change, changeType, icon, description }: KPICardProps) {
+function MetricCard({ title, value, subtitle, change, changeType, showViewReport }: MetricCardProps) {
   const [displayValue, setDisplayValue] = useState("0")
   
   useEffect(() => {
@@ -35,45 +35,64 @@ function KPICard({ title, value, change, changeType, icon, description }: KPICar
     }
     
     let current = 0
-    const increment = numericValue / 30
+    const increment = numericValue / 40
     const timer = setInterval(() => {
       current += increment
       if (current >= numericValue) {
         setDisplayValue(value)
         clearInterval(timer)
       } else {
-        setDisplayValue(Math.floor(current).toString())
+        const formattedValue = value.includes('$') ? `$${Math.floor(current).toLocaleString()}` :
+                              value.includes('%') ? `${Math.floor(current)}%` :
+                              Math.floor(current).toLocaleString()
+        setDisplayValue(formattedValue)
       }
-    }, 50)
+    }, 30)
     
     return () => clearInterval(timer)
   }, [value])
   
-  const changeColor = changeType === "positive" ? "text-success" : 
-                     changeType === "negative" ? "text-destructive" : "text-muted-foreground"
+  const getChangeIcon = () => {
+    if (changeType === "positive") return <ArrowUpRight className="w-3 h-3 text-success" />
+    if (changeType === "negative") return <ArrowDownRight className="w-3 h-3 text-destructive" />
+    return <Minus className="w-3 h-3 text-muted-foreground" />
+  }
+  
+  const getChangeColor = () => {
+    if (changeType === "positive") return "text-success"
+    if (changeType === "negative") return "text-destructive"
+    return "text-muted-foreground"
+  }
   
   return (
-    <Card className="glass-card hover:shadow-accent transition-all duration-300">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
-          {title}
-        </CardTitle>
-        <div className="p-2 bg-accent/10 rounded-lg">
-          {icon}
+    <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-lg transition-all duration-300">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-sm font-medium text-muted-foreground">
+            {title}
+          </CardTitle>
+          {showViewReport && (
+            <Button variant="ghost" size="sm" className="text-xs text-accent hover:text-accent-foreground p-0 h-auto">
+              View Report
+            </Button>
+          )}
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold font-mono text-foreground mb-1">
-          {displayValue}
-        </div>
-        <div className="flex items-center space-x-2">
-          <p className={`text-xs font-medium ${changeColor}`}>
-            {change}
-          </p>
-          {description && (
+      <CardContent className="pt-0">
+        <div className="space-y-2">
+          <div className="text-3xl font-bold text-foreground">
+            {displayValue}
+          </div>
+          {subtitle && (
             <p className="text-xs text-muted-foreground">
-              {description}
+              {subtitle}
             </p>
+          )}
+          {change && (
+            <div className={`flex items-center space-x-1 text-xs ${getChangeColor()}`}>
+              {getChangeIcon()}
+              <span>{change}</span>
+            </div>
           )}
         </div>
       </CardContent>
@@ -92,164 +111,223 @@ export default function Dashboard({ userRole = "agent" }: DashboardProps) {
   } else if (userRole === "manager" || userRole === "admin") {
     return <ManagerDashboard />
   }
-  const [currentTime, setCurrentTime] = useState(new Date())
-  
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
-    return () => clearInterval(timer)
-  }, [])
-  
-  // Mock data - would come from API
-  const kpiData = [
-    {
-      title: "Total Accounts",
-      value: "2,847",
-      change: "+12% from last month",
-      changeType: "positive" as const,
-      icon: <Users className="h-4 w-4 text-accent" />,
-      description: "Active cases"
-    },
-    {
-      title: "Calls Today",
-      value: "156",
-      change: "+8% from yesterday",
-      changeType: "positive" as const,
-      icon: <Phone className="h-4 w-4 text-accent" />,
-      description: "Outbound attempts"
-    },
-    {
-      title: "Collections",
-      value: "$47,832",
-      change: "+15% this week",
-      changeType: "positive" as const,
-      icon: <DollarSign className="h-4 w-4 text-accent" />,
-      description: "Weekly total"
-    },
-    {
-      title: "Success Rate",
-      value: "68%",
-      change: "+3% improvement",
-      changeType: "positive" as const,
-      icon: <TrendingUp className="h-4 w-4 text-accent" />,
-      description: "Contact rate"
-    }
-  ]
   
   return (
-    <div className="min-h-screen bg-background p-6 space-y-6 animate-fade-in">
-      {/* Welcome Header */}
-      <div className="glass-card p-6 border-glass-border">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold font-poppins text-foreground mb-2">
-              Welcome to SecureCall CRM
-            </h1>
-            <p className="text-muted-foreground">
-              {currentTime.toLocaleString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit"
-              })}
-            </p>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Badge variant="outline" className="border-accent text-accent">
-              <CheckCircle className="w-3 h-3 mr-1" />
-              3CX Connected
-            </Badge>
-            <Badge variant="secondary">
-              Role: {userRole.charAt(0).toUpperCase() + userRole.slice(1)}
-            </Badge>
-          </div>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="border-b border-border/50 bg-card/30 backdrop-blur-sm">
+        <div className="p-6">
+          <h1 className="text-2xl font-semibold text-foreground">Dashboard</h1>
         </div>
       </div>
       
-      {/* KPI Cards */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {kpiData.map((kpi, index) => (
-          <div key={kpi.title} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-            <KPICard {...kpi} />
+      {/* Main Content */}
+      <div className="p-6 space-y-8">
+        {/* Top Row - Collections & Calls */}
+        <div className="grid gap-6 md:grid-cols-2">
+          <MetricCard
+            title="Collections"
+            value="$2,847,500"
+            subtitle="Collections from 1-30 Dec, 2020"
+            change="21% vs last month"
+            changeType="positive"
+            showViewReport={true}
+          />
+          
+          <div className="space-y-4">
+            <MetricCard
+              title="Call Time"
+              value="1,890 calls"
+              subtitle="From 1-30 Dec, 2020"
+              showViewReport={true}
+            />
+            
+            {/* Call Distribution */}
+            <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+              <CardContent className="p-4">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-lg font-semibold text-foreground">40%</div>
+                    <div className="text-xs text-muted-foreground">Morning</div>
+                  </div>
+                  <div>
+                    <div className="text-lg font-semibold text-foreground">35%</div>
+                    <div className="text-xs text-muted-foreground">Afternoon</div>
+                  </div>
+                  <div>
+                    <div className="text-lg font-semibold text-foreground">25%</div>
+                    <div className="text-xs text-muted-foreground">Evening</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
-        ))}
-      </div>
-      
-      {/* Quick Actions */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <PhoneCall className="w-5 h-5 text-accent" />
-              <span>Quick Dial</span>
-            </CardTitle>
-            <CardDescription>
-              Start calling from your assigned account list
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button className="w-full bg-gradient-accent hover:shadow-accent">
-              Start Dialing Session
-            </Button>
-          </CardContent>
-        </Card>
+        </div>
         
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <Clock className="w-5 h-5 text-accent" />
-              <span>Recent Activity</span>
-            </CardTitle>
-            <CardDescription>
-              Your latest call outcomes and notes
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span>Call completed</span>
-                <span className="text-success">Payment arranged</span>
+        {/* Middle Row - Performance & Accounts */}
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Agent Performance */}
+          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-base font-medium">Agent Performance</CardTitle>
+                <Button variant="ghost" size="sm" className="text-xs text-accent hover:text-accent-foreground p-0 h-auto">
+                  View Report
+                </Button>
               </div>
-              <div className="flex justify-between">
-                <span>Left voicemail</span>
-                <span className="text-warning">Follow-up needed</span>
+              <CardDescription className="text-xs">
+                Performance metrics for collection agents
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-3 bg-accent/5 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
+                      <DollarSign className="w-4 h-4 text-accent" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-sm">Top Collector</div>
+                      <div className="text-xs text-muted-foreground">$48,000 collected</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-semibold">85%</div>
+                    <div className="text-xs text-success">Success Rate</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+                      <Phone className="w-4 h-4 text-muted-foreground" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-sm">Most Calls</div>
+                      <div className="text-xs text-muted-foreground">245 calls made</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-semibold">92%</div>
+                    <div className="text-xs text-accent">Connect Rate</div>
+                  </div>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span>No answer</span>
-                <span className="text-muted-foreground">Try again later</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+          
+          {/* Account Status */}
+          <div className="space-y-4">
+            <MetricCard
+              title="Accounts"
+              value="2,568"
+              subtitle="Collections from 1-30 Dec, 2020"
+              change="21% vs last week"
+              changeType="positive"
+              showViewReport={true}
+            />
+            
+            {/* Account Distribution */}
+            <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+              <CardContent className="p-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-success rounded-full"></div>
+                      <span className="text-sm">Collected</span>
+                    </div>
+                    <div className="text-sm font-medium">1,247</div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-warning rounded-full"></div>
+                      <span className="text-sm">PTP</span>
+                    </div>
+                    <div className="text-sm font-medium">823</div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-destructive rounded-full"></div>
+                      <span className="text-sm">Not Collected</span>
+                    </div>
+                    <div className="text-sm font-medium">498</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
         
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <AlertCircle className="w-5 h-5 text-accent" />
-              <span>System Status</span>
-            </CardTitle>
-            <CardDescription>
-              Current system health and integrations
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">3CX Integration</span>
-                <Badge variant="default" className="bg-success text-white">Online</Badge>
+        {/* Bottom Row - Recent Activity & Quick Actions */}
+        <div className="grid gap-6 md:grid-cols-2">
+          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+            <CardHeader>
+              <CardTitle className="text-base font-medium">Recent Collections</CardTitle>
+              <CardDescription className="text-xs">Latest successful collections today</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-2 border-b border-border/30 last:border-b-0">
+                  <div>
+                    <div className="font-medium text-sm">Account #12457</div>
+                    <div className="text-xs text-muted-foreground">John Smith</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-semibold text-success">$1,250</div>
+                    <div className="text-xs text-muted-foreground">2 hours ago</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-2 border-b border-border/30 last:border-b-0">
+                  <div>
+                    <div className="font-medium text-sm">Account #12458</div>
+                    <div className="text-xs text-muted-foreground">Sarah Johnson</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-semibold text-success">$890</div>
+                    <div className="text-xs text-muted-foreground">4 hours ago</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-2">
+                  <div>
+                    <div className="font-medium text-sm">Account #12459</div>
+                    <div className="text-xs text-muted-foreground">Mike Davis</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-semibold text-success">$2,100</div>
+                    <div className="text-xs text-muted-foreground">6 hours ago</div>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Database</span>
-                <Badge variant="default" className="bg-success text-white">Healthy</Badge>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+            <CardHeader>
+              <CardTitle className="text-base font-medium">Quick Actions</CardTitle>
+              <CardDescription className="text-xs">Common tasks and shortcuts</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-3">
+                <Button className="justify-start bg-accent/10 hover:bg-accent/20 text-accent border-accent/20" variant="outline">
+                  <Phone className="w-4 h-4 mr-2" />
+                  Start Dialing Session
+                </Button>
+                <Button className="justify-start" variant="outline">
+                  <Users className="w-4 h-4 mr-2" />
+                  Upload New Accounts
+                </Button>
+                <Button className="justify-start" variant="outline">
+                  <Target className="w-4 h-4 mr-2" />
+                  View Assigned Accounts
+                </Button>
+                <Button className="justify-start" variant="outline">
+                  <TrendingUp className="w-4 h-4 mr-2" />
+                  Generate Report
+                </Button>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Call Recording</span>
-                <Badge variant="default" className="bg-success text-white">Active</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )
