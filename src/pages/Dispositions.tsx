@@ -29,13 +29,14 @@ interface Disposition {
   usageCount: number
 }
 
-// Mock data - would come from API
+// Mock data - PRD aligned dispositions
 const mockDispositions: Disposition[] = [
+  // PRD Required Dispositions
   {
     id: "1",
-    key: "PAYMENT_ARRANGED",
-    label: "Payment Arranged",
-    description: "Customer agreed to payment plan",
+    key: "PTP",
+    label: "✅ PTP (Promise to Pay)",
+    description: "Customer promised to pay by specific date",
     color: "success",
     category: "outcome",
     isDefault: true,
@@ -44,9 +45,9 @@ const mockDispositions: Disposition[] = [
   },
   {
     id: "2", 
-    key: "PAYMENT_FULL",
-    label: "Payment in Full",
-    description: "Customer paid entire balance",
+    key: "COLLECTED",
+    label: "💰 Collected",
+    description: "Payment collected successfully",
     color: "success",
     category: "outcome", 
     isDefault: true,
@@ -55,9 +56,9 @@ const mockDispositions: Disposition[] = [
   },
   {
     id: "3",
-    key: "REFUSED_PAYMENT",
-    label: "Refused to Pay",
-    description: "Customer declined payment arrangement",
+    key: "NOT_COLLECTED",
+    label: "❌ Not Collected",
+    description: "Unable to collect payment",
     color: "destructive",
     category: "contact",
     isDefault: true,
@@ -67,7 +68,7 @@ const mockDispositions: Disposition[] = [
   {
     id: "4",
     key: "NO_ANSWER",
-    label: "No Answer",
+    label: "📞 No Answer",
     description: "Phone rang but no one answered",
     color: "warning",
     category: "no_contact",
@@ -77,10 +78,10 @@ const mockDispositions: Disposition[] = [
   },
   {
     id: "5",
-    key: "VOICEMAIL_LEFT",
-    label: "Voicemail Left", 
-    description: "Left detailed voicemail message",
-    color: "accent",
+    key: "WRONG_NUMBER",
+    label: "📵 Wrong Number", 
+    description: "Phone number is incorrect or not working",
+    color: "destructive",
     category: "no_contact",
     isDefault: true,
     isActive: true,
@@ -88,17 +89,29 @@ const mockDispositions: Disposition[] = [
   },
   {
     id: "6",
-    key: "DISCONNECTED",
-    label: "Phone Disconnected",
-    description: "Number is no longer in service",
-    color: "destructive",
-    category: "no_contact",
-    isDefault: false,
+    key: "TOUCHED",
+    label: "🟢 Touched",
+    description: "Account has been contacted",
+    color: "success",
+    category: "contact",
+    isDefault: true,
     isActive: true,
     usageCount: 89
   },
   {
     id: "7",
+    key: "UNTOUCHED",
+    label: "🔴 Untouched",
+    description: "Account has not been contacted yet",
+    color: "destructive",
+    category: "no_contact",
+    isDefault: true,
+    isActive: true,
+    usageCount: 134
+  },
+  // Additional custom dispositions
+  {
+    id: "8",
     key: "CALLBACK_REQUESTED",
     label: "Callback Requested",
     description: "Customer requested specific callback time",
@@ -106,10 +119,10 @@ const mockDispositions: Disposition[] = [
     category: "contact",
     isDefault: false,
     isActive: true,
-    usageCount: 134
+    usageCount: 67
   },
   {
-    id: "8",
+    id: "9",
     key: "DISPUTE_CLAIM",
     label: "Dispute Claim",
     description: "Customer disputes the debt amount",
@@ -117,7 +130,18 @@ const mockDispositions: Disposition[] = [
     category: "contact", 
     isDefault: false,
     isActive: true,
-    usageCount: 67
+    usageCount: 34
+  },
+  {
+    id: "10",
+    key: "VOICEMAIL_LEFT",
+    label: "Voicemail Left", 
+    description: "Left detailed voicemail message",
+    color: "accent",
+    category: "no_contact",
+    isDefault: false,
+    isActive: true,
+    usageCount: 198
   }
 ]
 

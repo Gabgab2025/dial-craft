@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import AgentDashboard from "./pages/AgentDashboard";
+import ManagerDashboard from "./pages/ManagerDashboard";
 import Accounts from "./pages/Accounts";
 import CallCenter from "./pages/CallCenter";
 import Dispositions from "./pages/Dispositions";
@@ -58,6 +60,8 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<Navigate to="/dashboard" replace />} />
                   <Route path="/dashboard" element={<Dashboard userRole={user.role} />} />
+                  <Route path="/agent-dashboard" element={<AgentDashboard />} />
+                  <Route path="/manager-dashboard" element={<ManagerDashboard />} />
                   <Route path="/accounts" element={<Accounts />} />
                   <Route path="/calls" element={<CallCenter />} />
                   <Route path="/dispositions" element={<Dispositions />} />

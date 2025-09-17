@@ -2,6 +2,8 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import AgentDashboard from "./AgentDashboard"
+import ManagerDashboard from "./ManagerDashboard"
 import { 
   Users, 
   Phone, 
@@ -84,6 +86,12 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ userRole = "agent" }: DashboardProps) {
+  // Route to appropriate dashboard based on user role
+  if (userRole === "agent") {
+    return <AgentDashboard />
+  } else if (userRole === "manager" || userRole === "admin") {
+    return <ManagerDashboard />
+  }
   const [currentTime, setCurrentTime] = useState(new Date())
   
   useEffect(() => {

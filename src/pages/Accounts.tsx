@@ -18,12 +18,14 @@ import {
 interface Account {
   id: string
   name: string
-  phone: string
+  phoneNumbers: string[]
   balance: number
   dueDate: string
-  status: "active" | "delinquent" | "paid" | "pending"
+  status: "untouched" | "touched" | "ptp" | "collected" | "not_collected"
   lastContact: string
   assignedTo: string
+  bankPartner: string
+  remarks: string
 }
 
 // Mock data - would come from API
@@ -31,52 +33,84 @@ const mockAccounts: Account[] = [
   {
     id: "ACC-001",
     name: "John Smith",
-    phone: "(555) 123-4567",
+    phoneNumbers: ["(555) 123-4567", "(555) 123-4568"],
     balance: 2500.00,
     dueDate: "2024-01-15",
-    status: "delinquent",
+    status: "touched",
     lastContact: "2024-01-10",
-    assignedTo: "Agent A"
+    assignedTo: "Agent A",
+    bankPartner: "First National Bank",
+    remarks: "Customer requested payment plan"
   },
   {
     id: "ACC-002", 
     name: "Sarah Johnson",
-    phone: "(555) 234-5678",
+    phoneNumbers: ["(555) 234-5678"],
     balance: 1200.00,
     dueDate: "2024-01-20",
-    status: "active",
+    status: "ptp",
     lastContact: "2024-01-12",
-    assignedTo: "Agent B"
+    assignedTo: "Agent B",
+    bankPartner: "Community Credit Union",
+    remarks: "PTP set for next Friday"
   },
   {
     id: "ACC-003",
     name: "Michael Brown",
-    phone: "(555) 345-6789", 
+    phoneNumbers: ["(555) 345-6789", "(555) 345-6790"], 
     balance: 0.00,
     dueDate: "2024-01-05",
-    status: "paid",
+    status: "collected",
     lastContact: "2024-01-08",
-    assignedTo: "Agent A"
+    assignedTo: "Agent A",
+    bankPartner: "Metro Bank",
+    remarks: "Full payment received"
   },
   {
     id: "ACC-004",
     name: "Emily Davis",
-    phone: "(555) 456-7890",
+    phoneNumbers: ["(555) 456-7890"],
     balance: 3200.00,
     dueDate: "2024-01-25",
-    status: "pending",
+    status: "untouched",
     lastContact: "Never",
-    assignedTo: "Agent C"
+    assignedTo: "Agent C",
+    bankPartner: "First National Bank",
+    remarks: "New account - first contact attempt needed"
+  },
+  {
+    id: "ACC-005",
+    name: "Robert Wilson",
+    phoneNumbers: ["(555) 567-8901", "(555) 567-8902", "(555) 567-8903"],
+    balance: 1850.00,
+    dueDate: "2024-01-18",
+    status: "not_collected",
+    lastContact: "2024-01-13",
+    assignedTo: "Agent B",
+    bankPartner: "Regional Bank",
+    remarks: "Refused payment, disputes amount"
   }
 ]
 
 function getStatusColor(status: Account["status"]) {
   switch (status) {
-    case "active": return "bg-accent/10 text-accent border-accent/20"
-    case "delinquent": return "bg-destructive/10 text-destructive border-destructive/20"
-    case "paid": return "bg-success/10 text-success border-success/20"
-    case "pending": return "bg-warning/10 text-warning border-warning/20"
+    case "untouched": return "bg-muted/10 text-muted-foreground border-muted/20"
+    case "touched": return "bg-accent/10 text-accent border-accent/20"
+    case "ptp": return "bg-warning/10 text-warning border-warning/20"
+    case "collected": return "bg-success/10 text-success border-success/20"
+    case "not_collected": return "bg-destructive/10 text-destructive border-destructive/20"
     default: return "bg-muted/10 text-muted-foreground border-muted/20"
+  }
+}
+
+function getStatusIcon(status: Account["status"]) {
+  switch (status) {
+    case "untouched": return "🔴"
+    case "touched": return "🟢"
+    case "ptp": return "✅"
+    case "collected": return "💰"
+    case "not_collected": return "❌"
+    default: return "⚫"
   }
 }
 
@@ -100,7 +134,7 @@ export default function Accounts() {
     
     const filtered = mockAccounts.filter(account =>
       account.name.toLowerCase().includes(query.toLowerCase()) ||
-      account.phone.includes(query) ||
+      account.phoneNumbers.some(phone => phone.includes(query)) ||
       account.id.toLowerCase().includes(query.toLowerCase())
     )
     setFilteredAccounts(filtered)
@@ -194,10 +228,10 @@ export default function Accounts() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold font-mono text-destructive">
-              {mockAccounts.filter(acc => acc.status === 'delinquent').length}
+              {mockAccounts.filter(acc => acc.status === 'untouched').length}
             </div>
             <p className="text-xs text-muted-foreground">
-              Require attention
+              Untouched accounts
             </p>
           </CardContent>
         </Card>
@@ -260,7 +294,14 @@ export default function Accounts() {
                     </td>
                     <td className="py-4 px-4">
                       <div className="space-y-1">
-                        <div className="font-mono text-sm text-foreground">{account.phone}</div>
+                        <div className="font-mono text-sm text-foreground">
+                          {account.phoneNumbers[0]}
+                          {account.phoneNumbers.length > 1 && (
+                            <Badge variant="secondary" className="ml-2 text-xs">
+                              +{account.phoneNumbers.length - 1}
+                            </Badge>
+                          )}
+                        </div>
                         <div className="text-xs text-muted-foreground">
                           Last: {account.lastContact}
                         </div>
@@ -273,7 +314,8 @@ export default function Accounts() {
                     </td>
                     <td className="py-4 px-4">
                       <Badge className={getStatusColor(account.status)}>
-                        {account.status.charAt(0).toUpperCase() + account.status.slice(1)}
+                        <span className="mr-1">{getStatusIcon(account.status)}</span>
+                        {account.status.replace('_', ' ').charAt(0).toUpperCase() + account.status.replace('_', ' ').slice(1)}
                       </Badge>
                     </td>
                     <td className="py-4 px-4">
