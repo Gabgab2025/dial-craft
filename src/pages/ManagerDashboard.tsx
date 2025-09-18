@@ -196,28 +196,64 @@ export default function ManagerDashboard() {
   ]
   
   return (
-    <div className="min-h-screen bg-gray-50 p-6 animate-fade-in">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Dashboard</h1>
-        <p className="text-gray-600">
-          {currentTime.toLocaleString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long", 
-            day: "numeric"
-          })}
-        </p>
+    <div className="min-h-screen bg-background p-6 space-y-6 animate-fade-in">
+      {/* Header with KPI Selector */}
+      <div className="glass-card p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold font-poppins text-foreground mb-2">Dashboard</h1>
+            <p className="text-muted-foreground">
+              {currentTime.toLocaleString("en-US", {
+                weekday: "long",
+                year: "numeric", 
+                month: "long",
+                day: "numeric"
+              })} • Performance Analytics
+            </p>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Badge variant="outline" className="border-success text-success">
+              <CheckCircle className="w-3 h-3 mr-1" />
+              All Systems Online
+            </Badge>
+            <Select value={selectedMetric} onValueChange={setSelectedMetric}>
+              <SelectTrigger className="w-48 bg-glass-light/50 backdrop-blur-sm border-glass-border hover:bg-glass-light/70 transition-colors">
+                <SelectValue placeholder="Select KPIs" />
+                <ChevronDown className="h-4 w-4 opacity-50" />
+              </SelectTrigger>
+              <SelectContent className="bg-glass-medium/95 backdrop-blur-md border-glass-border z-50">
+                <SelectItem value="batch" className="hover:bg-glass-light/30 focus:bg-glass-light/30">
+                  <div className="flex items-center space-x-2">
+                    <Upload className="h-4 w-4 text-accent" />
+                    <span>Batch Metrics</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="calls" className="hover:bg-glass-light/30 focus:bg-glass-light/30">
+                  <div className="flex items-center space-x-2">
+                    <Phone className="h-4 w-4 text-accent" />
+                    <span>Call Metrics</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="financial" className="hover:bg-glass-light/30 focus:bg-glass-light/30">
+                  <div className="flex items-center space-x-2">
+                    <DollarSign className="h-4 w-4 text-success" />
+                    <span>Financial Metrics</span>
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </div>
 
       {/* Main Dashboard Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Revenue Card */}
-        <Card className="bg-white shadow-sm border-0">
+        <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-medium text-gray-600">Revenue</CardTitle>
-              <Button variant="ghost" size="sm" className="text-blue-600 text-xs">
+              <CardTitle className="text-sm font-medium text-muted-foreground">Revenue</CardTitle>
+              <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
                 <Eye className="h-3 w-3 mr-1" />
                 View Report
               </Button>
@@ -225,24 +261,24 @@ export default function ManagerDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="text-2xl font-bold text-gray-900">$287,450</div>
+              <div className="text-2xl font-bold text-foreground font-mono">$287,450</div>
               <div className="flex items-center text-sm">
-                <ArrowUp className="h-3 w-3 text-green-500 mr-1" />
-                <span className="text-green-500 font-medium">2.1%</span>
-                <span className="text-gray-500 ml-1">vs last week</span>
+                <ArrowUp className="h-3 w-3 text-success mr-1" />
+                <span className="text-success font-medium">2.1%</span>
+                <span className="text-muted-foreground ml-1">vs last week</span>
               </div>
-              <div className="text-xs text-gray-500 mb-3">Sales from 1-6 Dec, 2020</div>
+              <div className="text-xs text-muted-foreground mb-3">Sales from 1-6 Dec, 2020</div>
               {/* Simple bar chart representation */}
               <div className="flex items-end space-x-1 h-16">
                 {[40, 65, 45, 70, 85, 50, 75, 60, 80, 90, 70, 85].map((height, i) => (
                   <div 
                     key={i} 
-                    className="bg-blue-500 rounded-sm flex-1" 
+                    className="bg-accent rounded-sm flex-1 opacity-80 hover:opacity-100 transition-opacity" 
                     style={{ height: `${height}%` }}
                   />
                 ))}
               </div>
-              <div className="flex justify-between text-xs text-gray-400 mt-2">
+              <div className="flex justify-between text-xs text-muted-foreground mt-2">
                 <span>• Last 6 days</span>
                 <span>• Last Week</span>
               </div>
@@ -251,11 +287,11 @@ export default function ManagerDashboard() {
         </Card>
 
         {/* Call Time Distribution */}
-        <Card className="bg-white shadow-sm border-0">
+        <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-medium text-gray-600">Call Time</CardTitle>
-              <Button variant="ghost" size="sm" className="text-blue-600 text-xs">
+              <CardTitle className="text-sm font-medium text-muted-foreground">Call Time</CardTitle>
+              <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
                 <Eye className="h-3 w-3 mr-1" />
                 View Report
               </Button>
@@ -263,16 +299,16 @@ export default function ManagerDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="text-xs text-gray-500">From 1-6 Dec, 2020</div>
+              <div className="text-xs text-muted-foreground">From 1-6 Dec, 2020</div>
               {/* Donut chart representation */}
               <div className="flex items-center justify-center relative">
-                <div className="w-32 h-32 rounded-full border-8 border-blue-200 relative">
-                  <div className="absolute inset-0 rounded-full border-8 border-transparent border-t-blue-600 transform rotate-45"></div>
-                  <div className="absolute inset-2 rounded-full bg-gray-800 flex items-center justify-center">
+                <div className="w-32 h-32 rounded-full border-8 border-muted relative">
+                  <div className="absolute inset-0 rounded-full border-8 border-transparent border-t-accent transform rotate-45"></div>
+                  <div className="absolute inset-2 rounded-full bg-primary flex items-center justify-center">
                     <div className="text-center">
-                      <div className="text-white text-xs font-medium">Afternoon</div>
-                      <div className="text-white text-lg font-bold">1,890</div>
-                      <div className="text-white text-xs">calls</div>
+                      <div className="text-primary-foreground text-xs font-medium">Afternoon</div>
+                      <div className="text-primary-foreground text-lg font-bold font-mono">1,890</div>
+                      <div className="text-primary-foreground text-xs">calls</div>
                     </div>
                   </div>
                 </div>
@@ -280,24 +316,24 @@ export default function ManagerDashboard() {
               <div className="grid grid-cols-3 gap-2 text-xs">
                 <div className="text-center">
                   <div className="flex items-center justify-center mb-1">
-                    <div className="w-2 h-2 bg-gray-800 rounded-full mr-1"></div>
-                    <span className="text-gray-600">Afternoon</span>
+                    <div className="w-2 h-2 bg-primary rounded-full mr-1"></div>
+                    <span className="text-muted-foreground">Afternoon</span>
                   </div>
-                  <div className="text-gray-900 font-medium">40%</div>
+                  <div className="text-foreground font-medium">40%</div>
                 </div>
                 <div className="text-center">
                   <div className="flex items-center justify-center mb-1">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full mr-1"></div>
-                    <span className="text-gray-600">Evening</span>
+                    <div className="w-2 h-2 bg-accent rounded-full mr-1"></div>
+                    <span className="text-muted-foreground">Evening</span>
                   </div>
-                  <div className="text-gray-900 font-medium">32%</div>
+                  <div className="text-foreground font-medium">32%</div>
                 </div>
                 <div className="text-center">
                   <div className="flex items-center justify-center mb-1">
-                    <div className="w-2 h-2 bg-blue-200 rounded-full mr-1"></div>
-                    <span className="text-gray-600">Morning</span>
+                    <div className="w-2 h-2 bg-muted rounded-full mr-1"></div>
+                    <span className="text-muted-foreground">Morning</span>
                   </div>
-                  <div className="text-gray-900 font-medium">28%</div>
+                  <div className="text-foreground font-medium">28%</div>
                 </div>
               </div>
             </div>
@@ -305,11 +341,11 @@ export default function ManagerDashboard() {
         </Card>
 
         {/* Collections */}
-        <Card className="bg-white shadow-sm border-0">
+        <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-medium text-gray-600">Collections</CardTitle>
-              <Button variant="ghost" size="sm" className="text-blue-600 text-xs">
+              <CardTitle className="text-sm font-medium text-muted-foreground">Collections</CardTitle>
+              <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
                 <Eye className="h-3 w-3 mr-1" />
                 View Report
               </Button>
@@ -317,25 +353,25 @@ export default function ManagerDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="text-2xl font-bold text-gray-900">2,568</div>
+              <div className="text-2xl font-bold text-foreground font-mono">2,568</div>
               <div className="flex items-center text-sm">
-                <ArrowUp className="h-3 w-3 text-green-500 mr-1" />
-                <span className="text-green-500 font-medium">2.1%</span>
-                <span className="text-gray-500 ml-1">vs last week</span>
+                <ArrowUp className="h-3 w-3 text-success mr-1" />
+                <span className="text-success font-medium">2.1%</span>
+                <span className="text-muted-foreground ml-1">vs last week</span>
               </div>
-              <div className="text-xs text-gray-500 mb-3">Results from 1-6 Dec, 2020</div>
+              <div className="text-xs text-muted-foreground mb-3">Results from 1-6 Dec, 2020</div>
               {/* Line chart representation */}
               <div className="h-16 flex items-end">
                 <svg className="w-full h-full" viewBox="0 0 200 60">
                   <polyline
                     fill="none"
-                    stroke="#3B82F6"
+                    stroke="hsl(var(--accent))"
                     strokeWidth="2"
                     points="10,50 30,40 50,45 70,30 90,25 110,35 130,20 150,15 170,10 190,5"
                   />
                 </svg>
               </div>
-              <div className="flex justify-between text-xs text-gray-400 mt-2">
+              <div className="flex justify-between text-xs text-muted-foreground mt-2">
                 <span>• Last 6 days</span>
                 <span>• Last Week</span>
               </div>
@@ -347,11 +383,11 @@ export default function ManagerDashboard() {
       {/* Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Agent Performance */}
-        <Card className="bg-white shadow-sm border-0">
+        <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Agent Performance</CardTitle>
-            <CardDescription className="text-xs text-gray-500">
-              Lorem ipsum dolor sit amet, consectetur
+            <CardTitle className="text-sm font-medium text-muted-foreground">Agent Performance</CardTitle>
+            <CardDescription className="text-xs text-muted-foreground">
+              Performance ratings across key metrics 
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -360,39 +396,39 @@ export default function ManagerDashboard() {
               <div className="flex items-center justify-center space-x-6">
                 <div className="text-center">
                   <div className="relative w-20 h-20 mx-auto mb-2">
-                    <div className="w-full h-full rounded-full border-4 border-gray-200">
-                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-purple-500 border-r-purple-500 border-b-purple-500 transform rotate-12"></div>
+                    <div className="w-full h-full rounded-full border-4 border-muted">
+                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-accent border-r-accent border-b-accent transform rotate-12"></div>
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-purple-600 text-lg font-bold">85%</div>
-                        <div className="text-xs text-gray-500">Hygiene</div>
+                        <div className="text-accent text-lg font-bold font-mono">85%</div>
+                        <div className="text-xs text-muted-foreground">Quality</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="text-center">
                   <div className="relative w-20 h-20 mx-auto mb-2">
-                    <div className="w-full h-full rounded-full border-4 border-gray-200">
-                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-orange-500 border-r-orange-500 border-b-orange-500 border-l-orange-500 transform -rotate-12"></div>
+                    <div className="w-full h-full rounded-full border-4 border-muted">
+                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-warning border-r-warning border-b-warning border-l-warning transform -rotate-12"></div>
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-orange-500 text-lg font-bold">85%</div>
-                        <div className="text-xs text-gray-500">Food taste</div>
+                        <div className="text-warning text-lg font-bold font-mono">85%</div>
+                        <div className="text-xs text-muted-foreground">Efficiency</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="text-center">
                   <div className="relative w-20 h-20 mx-auto mb-2">
-                    <div className="w-full h-full rounded-full border-4 border-gray-200">
-                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-cyan-500 border-r-cyan-500 border-b-cyan-500 border-l-cyan-500 transform rotate-90"></div>
+                    <div className="w-full h-full rounded-full border-4 border-muted">
+                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-success border-r-success border-b-success border-l-success transform rotate-90"></div>
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-cyan-500 text-lg font-bold">92%</div>
-                        <div className="text-xs text-gray-500">On-time</div>
+                        <div className="text-success text-lg font-bold font-mono">92%</div>
+                        <div className="text-xs text-muted-foreground">On-time</div>
                       </div>
                     </div>
                   </div>
@@ -403,41 +439,41 @@ export default function ManagerDashboard() {
         </Card>
 
         {/* Top Performers */}
-        <Card className="bg-white shadow-sm border-0">
+        <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Top Performers</CardTitle>
-            <CardDescription className="text-xs text-gray-500">
-              Adipiscing elit, sed do eiusmod tempor
+            <CardTitle className="text-sm font-medium text-muted-foreground">Top Performers</CardTitle>
+            <CardDescription className="text-xs text-muted-foreground">
+              Leading agents by collection amount
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {[
-                { name: "Sarah Johnson", amount: "IDR 48,000", avatar: "SJ" },
-                { name: "Mike Rodriguez", amount: "IDR 78,000", avatar: "MR" },
-                { name: "Emma Davis", amount: "IDR 48,000", avatar: "ED" },
-                { name: "John Smith", amount: "IDR 45,000", avatar: "JS" }
+                { name: "Sarah Johnson", amount: "$48,230", avatar: "SJ" },
+                { name: "Mike Rodriguez", amount: "$42,890", avatar: "MR" },
+                { name: "Emma Davis", amount: "$38,760", avatar: "ED" },
+                { name: "John Smith", amount: "$35,420", avatar: "JS" }
               ].map((agent, index) => (
-                <div key={agent.name} className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs font-medium">{agent.avatar}</span>
+                <div key={agent.name} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-glass-light/20 transition-colors">
+                  <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
+                    <span className="text-accent-foreground text-xs font-medium">{agent.avatar}</span>
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm font-medium text-gray-900">{agent.name}</div>
+                    <div className="text-sm font-medium text-foreground">{agent.name}</div>
                   </div>
-                  <div className="text-sm font-medium text-gray-900">{agent.amount}</div>
+                  <div className="text-sm font-mono font-bold text-success">{agent.amount}</div>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* Placeholder Card */}
-        <Card className="bg-white shadow-sm border-0">
+        {/* Team Status */}
+        <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-medium text-gray-600">Team Status</CardTitle>
-              <Button variant="ghost" size="sm" className="text-blue-600 text-xs">
+              <CardTitle className="text-sm font-medium text-muted-foreground">Team Status</CardTitle>
+              <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
                 <Eye className="h-3 w-3 mr-1" />
                 View Report
               </Button>
@@ -445,25 +481,25 @@ export default function ManagerDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="text-2xl font-bold text-gray-900">24</div>
+              <div className="text-2xl font-bold text-foreground font-mono">24</div>
               <div className="flex items-center text-sm">
-                <ArrowUp className="h-3 w-3 text-green-500 mr-1" />
-                <span className="text-green-500 font-medium">8.2%</span>
-                <span className="text-gray-500 ml-1">vs last week</span>
+                <ArrowUp className="h-3 w-3 text-success mr-1" />
+                <span className="text-success font-medium">8.2%</span>
+                <span className="text-muted-foreground ml-1">vs last week</span>
               </div>
-              <div className="text-xs text-gray-500 mb-3">Active agents online</div>
+              <div className="text-xs text-muted-foreground mb-3">Active agents online</div>
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span className="text-gray-600">Online</span>
-                  <span className="text-gray-900 font-medium">18 agents</span>
+                  <span className="text-muted-foreground">Online</span>
+                  <span className="text-success font-medium">18 agents</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span className="text-gray-600">On Break</span>
-                  <span className="text-gray-900 font-medium">4 agents</span>
+                  <span className="text-muted-foreground">On Break</span>
+                  <span className="text-warning font-medium">4 agents</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span className="text-gray-600">Offline</span>
-                  <span className="text-gray-900 font-medium">2 agents</span>
+                  <span className="text-muted-foreground">Offline</span>
+                  <span className="text-muted-foreground font-medium">2 agents</span>
                 </div>
               </div>
             </div>
