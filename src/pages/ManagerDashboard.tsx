@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { 
   Users, 
   Phone, 
@@ -12,7 +13,8 @@ import {
   CheckCircle,
   Award,
   BarChart3,
-  Clock
+  Clock,
+  ChevronDown
 } from "lucide-react"
 
 interface ManagerKPICardProps {
@@ -83,6 +85,7 @@ function ManagerKPICard({ title, value, change, changeType, icon, description }:
 
 export default function ManagerDashboard() {
   const [currentTime, setCurrentTime] = useState(new Date())
+  const [selectedMetric, setSelectedMetric] = useState<string>("batch")
   
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
@@ -171,6 +174,13 @@ export default function ManagerDashboard() {
     }
   ]
   
+  // Metric categories
+  const metricCategories = {
+    batch: { title: "Batch Metrics", data: batchMetrics },
+    calls: { title: "Call Metrics", data: callMetrics },
+    financial: { title: "Financial Metrics", data: financialMetrics }
+  }
+
   // Agent Leaderboard
   const agentLeaderboard = [
     { name: "Sarah Johnson", collections: "$45,230", ptps: 156, rate: "82%" },
@@ -213,41 +223,52 @@ export default function ManagerDashboard() {
         </div>
       </div>
       
-      {/* Batch Metrics */}
-      <div>
-        <h2 className="text-xl font-semibold text-foreground mb-4">Batch Metrics</h2>
-        <div className="grid gap-6 md:grid-cols-3">
-          {batchMetrics.map((metric, index) => (
-            <div key={metric.title} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-              <ManagerKPICard {...metric} />
+      {/* Metrics Selector */}
+      <Card className="glass-card">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-lg font-semibold text-foreground">Performance Metrics</CardTitle>
+              <CardDescription>Select metrics category to view detailed performance data</CardDescription>
             </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Call Metrics */}
-      <div>
-        <h2 className="text-xl font-semibold text-foreground mb-4">Call Metrics</h2>
-        <div className="grid gap-6 md:grid-cols-3">
-          {callMetrics.map((metric, index) => (
-            <div key={metric.title} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-              <ManagerKPICard {...metric} />
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Financial Metrics */}
-      <div>
-        <h2 className="text-xl font-semibold text-foreground mb-4">Financial Metrics</h2>
-        <div className="grid gap-6 md:grid-cols-3">
-          {financialMetrics.map((metric, index) => (
-            <div key={metric.title} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-              <ManagerKPICard {...metric} />
-            </div>
-          ))}
-        </div>
-      </div>
+            <Select value={selectedMetric} onValueChange={setSelectedMetric}>
+              <SelectTrigger className="w-48 bg-background/80 backdrop-blur-sm border-glass-border z-50">
+                <SelectValue placeholder="Select metrics" />
+                <ChevronDown className="h-4 w-4 opacity-50" />
+              </SelectTrigger>
+              <SelectContent className="bg-background/95 backdrop-blur-sm border-glass-border z-50">
+                <SelectItem value="batch" className="hover:bg-glass-light/20">
+                  <div className="flex items-center space-x-2">
+                    <Upload className="h-4 w-4 text-accent" />
+                    <span>Batch Metrics</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="calls" className="hover:bg-glass-light/20">
+                  <div className="flex items-center space-x-2">
+                    <Phone className="h-4 w-4 text-accent" />
+                    <span>Call Metrics</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="financial" className="hover:bg-glass-light/20">
+                  <div className="flex items-center space-x-2">
+                    <DollarSign className="h-4 w-4 text-success" />
+                    <span>Financial Metrics</span>
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-6 md:grid-cols-3">
+            {metricCategories[selectedMetric as keyof typeof metricCategories].data.map((metric, index) => (
+              <div key={metric.title} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                <ManagerKPICard {...metric} />
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
       
       {/* Agent Leaderboard & Daily Trends */}
       <div className="grid gap-6 lg:grid-cols-2">
