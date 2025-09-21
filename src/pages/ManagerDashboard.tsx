@@ -70,7 +70,7 @@ function ManagerKPICard({ title, value, change, changeType, icon, description }:
         </div>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold font-mono text-foreground mb-1">
+        <div className="text-xl md:text-2xl font-bold font-mono text-foreground mb-1">
           {displayValue}
         </div>
         <div className="flex items-center space-x-2">
@@ -196,13 +196,13 @@ export default function ManagerDashboard() {
   ]
   
   return (
-    <div className="min-h-screen bg-background p-6 space-y-6 animate-fade-in">
+    <div className="min-h-screen bg-background p-4 md:p-6 space-y-4 md:space-y-6 animate-fade-in">
       {/* Header with KPI Selector */}
-      <div className="glass-card p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold font-poppins text-foreground mb-2">Dashboard</h1>
-            <p className="text-muted-foreground">
+      <div className="glass-card p-4 md:p-6">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-4 md:mb-6">
+          <div className="flex-1">
+            <h1 className="text-2xl md:text-3xl font-bold font-poppins text-foreground mb-2">Dashboard</h1>
+            <p className="text-sm md:text-base text-muted-foreground">
               {currentTime.toLocaleString("en-US", {
                 weekday: "long",
                 year: "numeric", 
@@ -211,13 +211,13 @@ export default function ManagerDashboard() {
               })} • Performance Analytics
             </p>
           </div>
-          <div className="flex items-center space-x-4">
-            <Badge variant="outline" className="border-success text-success">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+            <Badge variant="outline" className="border-success text-success self-center sm:self-auto">
               <CheckCircle className="w-3 h-3 mr-1" />
               All Systems Online
             </Badge>
             <Select value={selectedMetric} onValueChange={setSelectedMetric}>
-              <SelectTrigger className="w-48 bg-glass-light/50 backdrop-blur-sm border-glass-border hover:bg-glass-light/70 transition-colors">
+              <SelectTrigger className="w-full sm:w-48 bg-glass-light/50 backdrop-blur-sm border-glass-border hover:bg-glass-light/70 transition-colors">
                 <SelectValue placeholder="Select KPIs" />
                 <ChevronDown className="h-4 w-4 opacity-50" />
               </SelectTrigger>
@@ -246,8 +246,15 @@ export default function ManagerDashboard() {
         </div>
       </div>
 
+      {/* KPI Metrics Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {metricCategories[selectedMetric as keyof typeof metricCategories].data.map((metric, index) => (
+          <ManagerKPICard key={index} {...metric} />
+        ))}
+      </div>
+
       {/* Main Dashboard Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-6">
         {/* Revenue Card */}
         <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300">
           <CardHeader className="pb-2">
@@ -255,13 +262,14 @@ export default function ManagerDashboard() {
               <CardTitle className="text-sm font-medium text-muted-foreground">Revenue</CardTitle>
               <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
                 <Eye className="h-3 w-3 mr-1" />
-                View Report
+                <span className="hidden sm:inline">View Report</span>
+                <span className="sm:hidden">View</span>
               </Button>
             </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="text-2xl font-bold text-foreground font-mono">$287,450</div>
+              <div className="text-xl md:text-2xl font-bold text-foreground font-mono">$287,450</div>
               <div className="flex items-center text-sm">
                 <ArrowUp className="h-3 w-3 text-success mr-1" />
                 <span className="text-success font-medium">2.1%</span>
@@ -269,7 +277,7 @@ export default function ManagerDashboard() {
               </div>
               <div className="text-xs text-muted-foreground mb-3">Sales from 1-6 Dec, 2020</div>
               {/* Simple bar chart representation */}
-              <div className="flex items-end space-x-1 h-16">
+              <div className="flex items-end space-x-1 h-12 md:h-16">
                 {[40, 65, 45, 70, 85, 50, 75, 60, 80, 90, 70, 85].map((height, i) => (
                   <div 
                     key={i} 
@@ -293,7 +301,8 @@ export default function ManagerDashboard() {
               <CardTitle className="text-sm font-medium text-muted-foreground">Call Time</CardTitle>
               <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
                 <Eye className="h-3 w-3 mr-1" />
-                View Report
+                <span className="hidden sm:inline">View Report</span>
+                <span className="sm:hidden">View</span>
               </Button>
             </div>
           </CardHeader>
@@ -302,36 +311,36 @@ export default function ManagerDashboard() {
               <div className="text-xs text-muted-foreground">From 1-6 Dec, 2020</div>
               {/* Donut chart representation */}
               <div className="flex items-center justify-center relative">
-                <div className="w-32 h-32 rounded-full border-8 border-muted relative">
-                  <div className="absolute inset-0 rounded-full border-8 border-transparent border-t-accent transform rotate-45"></div>
-                  <div className="absolute inset-2 rounded-full bg-primary flex items-center justify-center">
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-6 md:border-8 border-muted relative">
+                  <div className="absolute inset-0 rounded-full border-6 md:border-8 border-transparent border-t-accent transform rotate-45"></div>
+                  <div className="absolute inset-1 md:inset-2 rounded-full bg-primary flex items-center justify-center">
                     <div className="text-center">
                       <div className="text-primary-foreground text-xs font-medium">Afternoon</div>
-                      <div className="text-primary-foreground text-lg font-bold font-mono">1,890</div>
+                      <div className="text-primary-foreground text-sm md:text-lg font-bold font-mono">1,890</div>
                       <div className="text-primary-foreground text-xs">calls</div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-2 text-xs">
+              <div className="grid grid-cols-3 gap-1 md:gap-2 text-xs">
                 <div className="text-center">
                   <div className="flex items-center justify-center mb-1">
                     <div className="w-2 h-2 bg-primary rounded-full mr-1"></div>
-                    <span className="text-muted-foreground">Afternoon</span>
+                    <span className="text-muted-foreground text-xs">Afternoon</span>
                   </div>
                   <div className="text-foreground font-medium">40%</div>
                 </div>
                 <div className="text-center">
                   <div className="flex items-center justify-center mb-1">
                     <div className="w-2 h-2 bg-accent rounded-full mr-1"></div>
-                    <span className="text-muted-foreground">Evening</span>
+                    <span className="text-muted-foreground text-xs">Evening</span>
                   </div>
                   <div className="text-foreground font-medium">32%</div>
                 </div>
                 <div className="text-center">
                   <div className="flex items-center justify-center mb-1">
                     <div className="w-2 h-2 bg-muted rounded-full mr-1"></div>
-                    <span className="text-muted-foreground">Morning</span>
+                    <span className="text-muted-foreground text-xs">Morning</span>
                   </div>
                   <div className="text-foreground font-medium">28%</div>
                 </div>
@@ -347,13 +356,14 @@ export default function ManagerDashboard() {
               <CardTitle className="text-sm font-medium text-muted-foreground">Collections</CardTitle>
               <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
                 <Eye className="h-3 w-3 mr-1" />
-                View Report
+                <span className="hidden sm:inline">View Report</span>
+                <span className="sm:hidden">View</span>
               </Button>
             </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="text-2xl font-bold text-foreground font-mono">2,568</div>
+              <div className="text-xl md:text-2xl font-bold text-foreground font-mono">2,568</div>
               <div className="flex items-center text-sm">
                 <ArrowUp className="h-3 w-3 text-success mr-1" />
                 <span className="text-success font-medium">2.1%</span>
@@ -361,7 +371,7 @@ export default function ManagerDashboard() {
               </div>
               <div className="text-xs text-muted-foreground mb-3">Results from 1-6 Dec, 2020</div>
               {/* Line chart representation */}
-              <div className="h-16 flex items-end">
+              <div className="h-12 md:h-16 flex items-end">
                 <svg className="w-full h-full" viewBox="0 0 200 60">
                   <polyline
                     fill="none"
@@ -381,7 +391,7 @@ export default function ManagerDashboard() {
       </div>
 
       {/* Bottom Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Agent Performance */}
         <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300">
           <CardHeader className="pb-2">
@@ -393,41 +403,41 @@ export default function ManagerDashboard() {
           <CardContent>
             <div className="space-y-4">
               {/* Donut charts for ratings */}
-              <div className="flex items-center justify-center space-x-6">
+              <div className="flex items-center justify-center space-x-3 md:space-x-6">
                 <div className="text-center">
-                  <div className="relative w-20 h-20 mx-auto mb-2">
-                    <div className="w-full h-full rounded-full border-4 border-muted">
-                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-accent border-r-accent border-b-accent transform rotate-12"></div>
+                  <div className="relative w-16 h-16 md:w-20 md:h-20 mx-auto mb-2">
+                    <div className="w-full h-full rounded-full border-3 md:border-4 border-muted">
+                      <div className="absolute inset-0 rounded-full border-3 md:border-4 border-transparent border-t-accent border-r-accent border-b-accent transform rotate-12"></div>
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-accent text-lg font-bold font-mono">85%</div>
+                        <div className="text-accent text-sm md:text-lg font-bold font-mono">85%</div>
                         <div className="text-xs text-muted-foreground">Quality</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="relative w-20 h-20 mx-auto mb-2">
-                    <div className="w-full h-full rounded-full border-4 border-muted">
-                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-warning border-r-warning border-b-warning border-l-warning transform -rotate-12"></div>
+                  <div className="relative w-16 h-16 md:w-20 md:h-20 mx-auto mb-2">
+                    <div className="w-full h-full rounded-full border-3 md:border-4 border-muted">
+                      <div className="absolute inset-0 rounded-full border-3 md:border-4 border-transparent border-t-warning border-r-warning border-b-warning border-l-warning transform -rotate-12"></div>
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-warning text-lg font-bold font-mono">85%</div>
+                        <div className="text-warning text-sm md:text-lg font-bold font-mono">85%</div>
                         <div className="text-xs text-muted-foreground">Efficiency</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="relative w-20 h-20 mx-auto mb-2">
-                    <div className="w-full h-full rounded-full border-4 border-muted">
-                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-success border-r-success border-b-success border-l-success transform rotate-90"></div>
+                  <div className="relative w-16 h-16 md:w-20 md:h-20 mx-auto mb-2">
+                    <div className="w-full h-full rounded-full border-3 md:border-4 border-muted">
+                      <div className="absolute inset-0 rounded-full border-3 md:border-4 border-transparent border-t-success border-r-success border-b-success border-l-success transform rotate-90"></div>
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-success text-lg font-bold font-mono">92%</div>
+                        <div className="text-success text-sm md:text-lg font-bold font-mono">92%</div>
                         <div className="text-xs text-muted-foreground">On-time</div>
                       </div>
                     </div>
@@ -455,13 +465,13 @@ export default function ManagerDashboard() {
                 { name: "John Smith", amount: "$35,420", avatar: "JS" }
               ].map((agent, index) => (
                 <div key={agent.name} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-glass-light/20 transition-colors">
-                  <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-accent-foreground text-xs font-medium">{agent.avatar}</span>
                   </div>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium text-foreground">{agent.name}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium text-foreground truncate">{agent.name}</div>
                   </div>
-                  <div className="text-sm font-mono font-bold text-success">{agent.amount}</div>
+                  <div className="text-sm font-mono font-bold text-success flex-shrink-0">{agent.amount}</div>
                 </div>
               ))}
             </div>
@@ -469,19 +479,20 @@ export default function ManagerDashboard() {
         </Card>
 
         {/* Team Status */}
-        <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300">
+        <Card className="glass-card border-glass-border hover:shadow-accent transition-all duration-300 md:col-span-2 lg:col-span-1">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-medium text-muted-foreground">Team Status</CardTitle>
               <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
                 <Eye className="h-3 w-3 mr-1" />
-                View Report
+                <span className="hidden sm:inline">View Report</span>
+                <span className="sm:hidden">View</span>
               </Button>
             </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="text-2xl font-bold text-foreground font-mono">24</div>
+              <div className="text-xl md:text-2xl font-bold text-foreground font-mono">24</div>
               <div className="flex items-center text-sm">
                 <ArrowUp className="h-3 w-3 text-success mr-1" />
                 <span className="text-success font-medium">8.2%</span>
