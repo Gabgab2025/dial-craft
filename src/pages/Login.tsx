@@ -16,7 +16,7 @@ export default function Login({ onLogin }: LoginPageProps) {
           <div className="relative bg-gradient-to-br from-primary/80 via-primary/60 to-accent/60 p-12 flex flex-col justify-center text-center lg:text-left">
             {/* Background Pattern */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary))_0%,transparent_50%)] opacity-40" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--accent))_0%,transparent_50%)] opacity-30" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--accent))_0%,transparent_30%)] opacity-60" />
             
             {/* Logo */}
             <div className="relative z-10 mb-8">
