@@ -104,63 +104,83 @@ export default function AgentDashboard() {
     return () => clearInterval(timer)
   }, [])
   
-  // Mock data - Agent specific KPIs per PRD
+  // PRD-aligned Agent KPIs
   const agentKPIs = [
     {
-      title: "Accounts Assigned vs Worked",
+      title: "Accounts Assigned",
+      value: "45",
+      target: "50",
+      progress: 90,
+      change: "+5",
+      changeType: "positive" as const,
+      icon: <Users className="w-5 h-5" />,
+      description: "total assigned accounts"
+    },
+    {
+      title: "Accounts Worked",
+      value: "28",
+      target: "40", 
+      progress: 70,
+      change: "+8",
+      changeType: "positive" as const,
+      icon: <Target className="w-5 h-5" />,
+      description: "touched accounts"
+    },
+    {
+      title: "Calls Made",
       value: "47",
-      target: "75",
-      progress: 63,
-      change: "+5 from yesterday",
+      target: "60",
+      progress: 78,
+      change: "+12",
       changeType: "positive" as const,
-      icon: <Users className="h-4 w-4 text-accent" />,
-      description: "Worked today"
+      icon: <Phone className="w-5 h-5" />,
+      description: "total calls today"
     },
     {
-      title: "Calls Made vs Successful",
-      value: "32",
-      target: "47",
-      progress: 68,
-      change: "68% connect rate",
+      title: "Successful Connections",
+      value: "34",
+      target: "45", 
+      progress: 76,
+      change: "+8",
       changeType: "positive" as const,
-      icon: <Phone className="h-4 w-4 text-accent" />,
-      description: "Connections"
+      icon: <PhoneCall className="w-5 h-5" />,
+      description: "connected calls"
     },
     {
-      title: "PTPs Today",
-      value: "8",
-      target: "12",
-      progress: 67,
-      change: "+2 from yesterday",
+      title: "PTPs This Month",
+      value: "12",
+      target: "20",
+      progress: 60,
+      change: "+3",
       changeType: "positive" as const,
-      icon: <CheckCircle className="h-4 w-4 text-accent" />,
-      description: "Promises to pay"
+      icon: <CheckCircle className="w-5 h-5" />,
+      description: "promises to pay secured"
     },
     {
       title: "Collections vs Quota",
-      value: "$12,450",
-      target: "$18,000",
-      progress: 69,
-      change: "69% of monthly quota",
+      value: "$8,450",
+      target: "$15,000",
+      progress: 56,
+      change: "+$1,200",
       changeType: "positive" as const,
-      icon: <DollarSign className="h-4 w-4 text-accent" />,
-      description: "This month"
+      icon: <DollarSign className="w-5 h-5" />,
+      description: "monthly collection goal"
     },
     {
-      title: "Average Handling Time",
+      title: "Avg Handling Time",
       value: "4:32",
-      change: "-15 seconds",
+      change: "-0:15",
       changeType: "positive" as const,
-      icon: <Clock className="h-4 w-4 text-accent" />,
-      description: "Per call"
+      icon: <Clock className="w-5 h-5" />,
+      description: "per call average"
     },
     {
-      title: "Success Rate",
+      title: "Contact Rate",
       value: "72%",
-      change: "+8% this week",
+      change: "+5%",
       changeType: "positive" as const,
-      icon: <TrendingUp className="h-4 w-4 text-accent" />,
-      description: "Contact success"
+      icon: <TrendingUp className="w-5 h-5" />,
+      description: "successful connections"
     }
   ]
   

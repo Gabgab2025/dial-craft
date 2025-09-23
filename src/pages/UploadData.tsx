@@ -318,7 +318,7 @@ export default function UploadData() {
                   </label>
                   
                   <div className="mt-4 text-xs text-muted-foreground">
-                    Required columns: Name, Phone, Balance, Due Date
+                    Required columns: Account ID, Name, Phone Numbers, Balance, Due Date, Bank Partner
                   </div>
                 </div>
               )}
@@ -354,7 +354,7 @@ export default function UploadData() {
                   <CheckCircle className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
                   <div className="text-sm">
                     <div className="font-medium">Required Columns</div>
-                    <div className="text-muted-foreground">Name, Phone, Balance, Due Date</div>
+                    <div className="text-muted-foreground">Account ID, Name, Phone Numbers, Balance, Due Date, Bank Partner</div>
                   </div>
                 </div>
                 
@@ -362,7 +362,7 @@ export default function UploadData() {
                   <CheckCircle className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
                   <div className="text-sm">
                     <div className="font-medium">Optional Columns</div>
-                    <div className="text-muted-foreground">Email, Address, Notes</div>
+                    <div className="text-muted-foreground">Email, Remarks, Additional Phone Numbers</div>
                   </div>
                 </div>
               </div>
