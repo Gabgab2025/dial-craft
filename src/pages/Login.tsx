@@ -52,7 +52,7 @@ export default function Login({ onLogin }: LoginPageProps) {
           </div>
           
           {/* Right Panel - Login Form */}
-          <div className="bg-card p-12 flex flex-col justify-center">
+          <div className="bg-primary/5 p-12 flex flex-col justify-center">
             <div className="max-w-sm mx-auto w-full">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-foreground mb-2">WELCOME BACK!</h2>

@@ -142,36 +142,8 @@ export function LoginForm({ onLogin }: LoginFormProps) {
           )}
         </Button>
       </form>
-      
-      {/* Divider */}
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
-        </div>
-      </div>
-      
-      {/* Google Sign In */}
-      <Button variant="outline" className="w-full border-border hover:bg-accent/50">
-        <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
-          <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-          <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-        </svg>
-        Sign in with Google
-      </Button>
-      
-      {/* Sign Up Link */}
-      <div className="text-center text-sm text-muted-foreground">
-        Don't have an account?{" "}
-        <Button variant="link" className="p-0 h-auto text-primary hover:text-primary/80">
-          Sign up
-        </Button>
-      </div>
-      
       {/* Demo Info */}
-      <div className="text-xs text-muted-foreground text-center border-t border-border pt-4">
+      <div className="text-xs text-muted-foreground text-center border-t border-border pt-4 mt-6">
         <p className="font-medium">Demo Accounts:</p>
         <p>admin@bank.com • manager@bank.com • agent@bank.com</p>
         <p>Password: demo123</p>
