@@ -116,7 +116,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
 
   return (
     <Sidebar
-      className="fixed inset-y-0 left-0 z-50 w-64 glass border-r border-sidebar-border transition-transform duration-300 data-[state=open]:translate-x-0 data-[state=closed]:-translate-x-full lg:relative lg:translate-x-0 lg:data-[state=closed]:w-16"
+      className="h-full border-r border-sidebar-border glass transition-all duration-300"
       collapsible="icon"
     >
       <SidebarContent className="bg-transparent">

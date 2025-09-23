@@ -13,23 +13,22 @@ interface AppLayoutProps {
 export function AppLayout({ children, userEmail, userRole, onLogout }: AppLayoutProps) {
   return (
     <SidebarProvider defaultOpen={false}>
-      <div className="min-h-screen flex w-full bg-background">
-        <AppSidebar userRole={userRole} userEmail={userEmail} onLogout={onLogout} />
-        
-        <div className="flex-1 flex flex-col min-w-0">
-          <TopNav 
-            userEmail={userEmail} 
-            userRole={userRole} 
-            onLogout={onLogout} 
-          />
+      <div className="min-h-screen w-full bg-background">
+        <div className="flex h-screen">
+          <AppSidebar userRole={userRole} userEmail={userEmail} onLogout={onLogout} />
           
-          <main className="flex-1 overflow-auto">
-            {children}
-          </main>
+          <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+            <TopNav 
+              userEmail={userEmail} 
+              userRole={userRole} 
+              onLogout={onLogout} 
+            />
+            
+            <main className="flex-1 overflow-auto">
+              {children}
+            </main>
+          </div>
         </div>
-        
-        {/* Mobile Overlay */}
-        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden sidebar-overlay" />
       </div>
     </SidebarProvider>
   )
