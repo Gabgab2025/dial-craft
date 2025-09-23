@@ -74,10 +74,10 @@ export function LoginForm({ onLogin }: LoginFormProps) {
         </div>
         <div>
           <CardTitle className="text-2xl font-poppins font-bold text-foreground">
-            JDGK Business Solutions
+            SecureCall CRM
           </CardTitle>
           <CardDescription className="text-muted-foreground mt-2">
-            Business Management System
+            Bank Collections Management System
           </CardDescription>
         </div>
       </CardHeader>

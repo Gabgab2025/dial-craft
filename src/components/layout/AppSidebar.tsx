@@ -121,23 +121,13 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
       collapsible="icon"
     >
       <SidebarContent className="bg-transparent">
-        {/* Logo Section */}
-        <div className="p-4 border-b border-sidebar-border">
-          <div className="flex items-center justify-center">
-            {collapsed ? (
-              <img 
-                src={jdgkLogo} 
-                alt="JDGK Business Solutions" 
-                className="h-8 w-auto object-contain"
-              />
-            ) : (
-              <img 
-                src={jdgkLogo} 
-                alt="JDGK Business Solutions" 
-                className="h-12 w-auto object-contain"
-              />
-            )}
-          </div>
+        {/* Logo */}
+        <div className="p-4 flex justify-center">
+          <img 
+            src={jdgkLogo} 
+            alt="JDGK Business Solutions" 
+            className={collapsed ? "h-8 w-auto object-contain" : "h-10 w-auto object-contain"}
+          />
         </div>
 
         {/* Main Navigation */}
