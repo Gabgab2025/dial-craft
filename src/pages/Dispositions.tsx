@@ -455,7 +455,7 @@ export default function Dispositions() {
 
       {/* Edit Disposition Dialog */}
       <Dialog open={!!editingDisposition} onOpenChange={() => cancelEdit()}>
-        <DialogContent className="glass-card border-glass-border max-w-md z-50 pointer-events-auto">
+        <DialogContent className="glass-dialog border-glass-border max-w-md z-50 pointer-events-auto">
           <DialogHeader>
             <DialogTitle className="text-foreground">Edit Disposition</DialogTitle>
             <DialogDescription className="text-muted-foreground">

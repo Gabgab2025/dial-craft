@@ -72,7 +72,7 @@ export default function ThreeCXStatus() {
                   Configure Integration
                 </Button>
               </DialogTrigger>
-              <DialogContent className="glass-card max-w-2xl max-h-[80vh] overflow-y-auto">
+              <DialogContent className="glass-dialog max-w-2xl max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle className="flex items-center gap-2">
                     <Phone className="w-5 h-5 text-accent" />

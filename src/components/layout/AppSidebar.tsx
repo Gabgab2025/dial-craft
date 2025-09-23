@@ -233,7 +233,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
 
       {/* User Profile Dialog */}
       <Dialog open={showProfile} onOpenChange={setShowProfile}>
-        <DialogContent className="glass-card border-glass-border max-w-2xl z-50">
+        <DialogContent className="glass-dialog border-glass-border max-w-2xl z-50">
           <DialogHeader>
             <DialogTitle className="text-foreground flex items-center">
               <User className="w-5 h-5 mr-2 text-accent" />

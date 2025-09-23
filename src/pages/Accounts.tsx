@@ -180,7 +180,7 @@ export default function Accounts() {
                   Add Account
                 </Button>
               </DialogTrigger>
-              <DialogContent className="glass-card border-glass-border max-w-2xl">
+              <DialogContent className="glass-dialog border-glass-border max-w-2xl">
                 <DialogHeader>
                   <DialogTitle className="text-foreground">Add New Account</DialogTitle>
                   <DialogDescription className="text-muted-foreground">
