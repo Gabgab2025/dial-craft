@@ -1,4 +1,5 @@
 import { LoginForm } from "@/components/auth/LoginForm"
+import jdgkBrochure from "@/assets/jdgk-brochure.png"
 
 interface LoginPageProps {
   onLogin: (email: string, password: string, role: string) => void
@@ -10,15 +11,12 @@ export default function Login({ onLogin }: LoginPageProps) {
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--accent))_0%,transparent_50%)] opacity-10" />
       {/* Business Info */}
-      <div className="absolute bottom-8 left-8 text-white/80 space-y-2 max-w-sm">
-        <h3 className="text-lg font-semibold text-white">JDGK Business Solutions</h3>
-        <p className="text-sm">Enterprise Collection Management System</p>
-        <div className="space-y-1 text-xs">
-          <p>📞 3CX Integration Ready</p>
-          <p>🔒 Bank-Grade Security</p>
-          <p>📊 Advanced Analytics & Reporting</p>
-          <p>👥 Multi-User Role Management</p>
-        </div>
+      <div className="absolute bottom-8 left-8 max-w-sm">
+        <img 
+          src={jdgkBrochure} 
+          alt="JDGK Business Solutions Inc. - Results Driven, Client Focused" 
+          className="w-64 h-auto rounded-lg shadow-2xl"
+        />
       </div>
       
       {/* Floating Elements */}
