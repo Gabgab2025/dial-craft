@@ -12,7 +12,7 @@ interface AppLayoutProps {
 
 export function AppLayout({ children, userEmail, userRole, onLogout }: AppLayoutProps) {
   return (
-    <SidebarProvider defaultOpen={false}>
+    <SidebarProvider defaultOpen={true}>
       <div className="min-h-screen w-full bg-background">
         <div className="flex h-screen">
           <AppSidebar userRole={userRole} userEmail={userEmail} onLogout={onLogout} />

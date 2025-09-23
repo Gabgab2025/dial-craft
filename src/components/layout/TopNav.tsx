@@ -7,7 +7,8 @@ import {
   Sun, 
   LogOut, 
   Settings,
-  Shield
+  Shield,
+  Menu
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -21,6 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 import { useTheme } from "@/components/ui/theme-provider"
 
 interface TopNavProps {
@@ -57,6 +59,8 @@ export function TopNav({ userEmail = "agent@bank.com", userRole = "agent", onLog
     <header className="glass-card border-b border-glass-border h-16 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-40">
       {/* Left Section */}
       <div className="flex items-center space-x-2 sm:space-x-4">
+        <SidebarTrigger className="hover:bg-glass-light p-2 rounded-lg transition-colors" />
+        
         {/* Global Search */}
         <div className="relative max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
