@@ -5,6 +5,9 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { 
   Plus, 
   Edit,
@@ -178,6 +181,13 @@ export default function Dispositions() {
   const [dispositions, setDispositions] = useState(mockDispositions)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
+  const [editingDisposition, setEditingDisposition] = useState<Disposition | null>(null)
+  const [editForm, setEditForm] = useState({
+    label: "",
+    description: "", 
+    color: "",
+    category: "" as Disposition["category"]
+  })
 
   const filteredDispositions = dispositions.filter(disp => {
     const matchesSearch = disp.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -199,6 +209,45 @@ export default function Dispositions() {
         disp.id === id ? { ...disp, isActive: !disp.isActive } : disp
       )
     )
+  }
+
+  const startEdit = (disposition: Disposition) => {
+    setEditingDisposition(disposition)
+    setEditForm({
+      label: disposition.label,
+      description: disposition.description,
+      color: disposition.color,
+      category: disposition.category
+    })
+  }
+
+  const cancelEdit = () => {
+    setEditingDisposition(null)
+    setEditForm({
+      label: "",
+      description: "",
+      color: "",
+      category: "contact"
+    })
+  }
+
+  const saveEdit = () => {
+    if (!editingDisposition) return
+    
+    setDispositions(prev =>
+      prev.map(disp =>
+        disp.id === editingDisposition.id
+          ? {
+              ...disp,
+              label: editForm.label,
+              description: editForm.description,
+              color: editForm.color,
+              category: editForm.category
+            }
+          : disp
+      )
+    )
+    cancelEdit()
   }
 
   return (
@@ -363,7 +412,12 @@ export default function Dispositions() {
               </div>
               
               <div className="flex items-center space-x-2 pt-2">
-                <Button variant="outline" size="sm" className="flex-1 glass-light border-glass-border">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="flex-1 glass-light border-glass-border"
+                  onClick={() => startEdit(disposition)}
+                >
                   <Edit className="w-3 h-3 mr-1" />
                   Edit
                 </Button>
@@ -396,6 +450,119 @@ export default function Dispositions() {
           </CardContent>
         </Card>
       )}
+
+      {/* Edit Disposition Dialog */}
+      <Dialog open={!!editingDisposition} onOpenChange={() => cancelEdit()}>
+        <DialogContent className="glass-card border-glass-border max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Edit Disposition</DialogTitle>
+            <DialogDescription className="text-muted-foreground">
+              Modify the disposition details below. Changes will be saved immediately.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="edit-label" className="text-sm font-medium text-foreground">
+                Display Label
+              </Label>
+              <Input
+                id="edit-label"
+                value={editForm.label}
+                onChange={(e) => setEditForm(prev => ({ ...prev, label: e.target.value }))}
+                className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                placeholder="Enter disposition label..."
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="edit-description" className="text-sm font-medium text-foreground">
+                Description
+              </Label>
+              <Textarea
+                id="edit-description"
+                value={editForm.description}
+                onChange={(e) => setEditForm(prev => ({ ...prev, description: e.target.value }))}
+                className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                placeholder="Enter description..."
+                rows={3}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="edit-category" className="text-sm font-medium text-foreground">
+                  Category
+                </Label>
+                <Select 
+                  value={editForm.category} 
+                  onValueChange={(value) => setEditForm(prev => ({ ...prev, category: value as Disposition["category"] }))}
+                >
+                  <SelectTrigger className="glass-light border-glass-border focus:ring-accent focus:border-accent">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="glass-card border-glass-border">
+                    <SelectItem value="contact">Contact Made</SelectItem>
+                    <SelectItem value="no_contact">No Contact</SelectItem>
+                    <SelectItem value="outcome">Positive Outcome</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="edit-color" className="text-sm font-medium text-foreground">
+                  Color Theme
+                </Label>
+                <Select 
+                  value={editForm.color} 
+                  onValueChange={(value) => setEditForm(prev => ({ ...prev, color: value }))}
+                >
+                  <SelectTrigger className="glass-light border-glass-border focus:ring-accent focus:border-accent">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="glass-card border-glass-border">
+                    <SelectItem value="success">Success (Green)</SelectItem>
+                    <SelectItem value="warning">Warning (Yellow)</SelectItem>
+                    <SelectItem value="destructive">Destructive (Red)</SelectItem>
+                    <SelectItem value="accent">Accent (Blue)</SelectItem>
+                    <SelectItem value="muted">Muted (Gray)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {editingDisposition?.isDefault && (
+              <div className="glass-light p-3 rounded-lg border border-accent/20">
+                <div className="flex items-center space-x-2">
+                  <Badge variant="outline" className="border-accent text-accent">
+                    Default Disposition
+                  </Badge>
+                  <span className="text-xs text-muted-foreground">
+                    This is a system default disposition
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter className="flex space-x-2">
+            <Button
+              variant="outline"
+              onClick={cancelEdit}
+              className="glass-light border-glass-border"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={saveEdit}
+              className="bg-gradient-accent hover:shadow-accent"
+              disabled={!editForm.label.trim() || !editForm.description.trim()}
+            >
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
