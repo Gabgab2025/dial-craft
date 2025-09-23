@@ -169,6 +169,14 @@ All colors MUST be HSL. Features glassmorphism and micro-interactions.
     transform: translateY(-2px);
     box-shadow: var(--shadow-glass), var(--shadow-accent);
   }
+
+  /* Prevent hover effects on dialogs to avoid shaking */
+  [role="dialog"] .glass-card:hover,
+  .glass-card[role="dialog"]:hover,
+  [data-radix-dialog-content] .glass-card:hover,
+  .glass-card[data-radix-dialog-content]:hover {
+    transform: none;
+  }
   
   /* Gradient Backgrounds */
   .bg-gradient-primary {
