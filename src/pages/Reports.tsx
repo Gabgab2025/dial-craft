@@ -152,49 +152,49 @@ export default function Reports() {
   const [dateRange, setDateRange] = useState<string>("last-30-days")
 
   return (
-    <div className="min-h-screen bg-background p-6 space-y-6 animate-fade-in">
+    <div className="min-h-screen bg-background p-3 sm:p-6 space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="glass-card p-6 border-glass-border">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold font-poppins text-foreground">
+      <div className="glass-card p-4 sm:p-6 border-glass-border">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 mb-6">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-2xl sm:text-3xl font-bold font-poppins text-foreground break-words">
               Reports & Analytics
             </h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-muted-foreground mt-1 text-sm sm:text-base">
               Create, manage, and track performance metrics for your campaigns all in one place.
             </p>
           </div>
-          <div className="flex items-center space-x-3">
-            <Button variant="outline" className="glass-light border-glass-border">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 shrink-0">
+            <Button variant="outline" className="glass-light border-glass-border justify-center">
               <Filter className="w-4 h-4 mr-2" />
               Filter
             </Button>
-            <Button className="bg-gradient-accent hover:shadow-accent">
+            <Button className="bg-gradient-accent hover:shadow-accent justify-center">
               + Create campaign
             </Button>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center space-x-6 mb-6">
-          <button className="text-foreground font-medium border-b-2 border-accent pb-2">
+        <div className="flex items-center space-x-4 sm:space-x-6 mb-6 overflow-x-auto pb-2">
+          <button className="text-foreground font-medium border-b-2 border-accent pb-2 whitespace-nowrap">
             Overview
           </button>
-          <button className="text-muted-foreground hover:text-foreground pb-2">
+          <button className="text-muted-foreground hover:text-foreground pb-2 whitespace-nowrap">
             Posts
           </button>
-          <button className="text-muted-foreground hover:text-foreground pb-2">
+          <button className="text-muted-foreground hover:text-foreground pb-2 whitespace-nowrap">
             Performance
           </button>
-          <button className="text-muted-foreground hover:text-foreground pb-2">
+          <button className="text-muted-foreground hover:text-foreground pb-2 whitespace-nowrap">
             Settings
           </button>
         </div>
 
         {/* Filters */}
-        <div className="flex items-center space-x-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
           <Select value={selectedChannel} onValueChange={setSelectedChannel}>
-            <SelectTrigger className="w-48 glass-light border-glass-border">
+            <SelectTrigger className="w-full sm:w-48 glass-light border-glass-border">
               <SelectValue placeholder="Channel: All" />
             </SelectTrigger>
             <SelectContent>
@@ -206,7 +206,7 @@ export default function Reports() {
           </Select>
           
           <Select value={selectedGoals} onValueChange={setSelectedGoals}>
-            <SelectTrigger className="w-48 glass-light border-glass-border">
+            <SelectTrigger className="w-full sm:w-48 glass-light border-glass-border">
               <SelectValue placeholder="Goals: All" />
             </SelectTrigger>
             <SelectContent>
@@ -218,7 +218,7 @@ export default function Reports() {
           </Select>
 
           <Select value={dateRange} onValueChange={setDateRange}>
-            <SelectTrigger className="w-48 glass-light border-glass-border">
+            <SelectTrigger className="w-full sm:w-48 glass-light border-glass-border">
               <SelectValue placeholder="Last 30 days" />
             </SelectTrigger>
             <SelectContent>
@@ -231,15 +231,15 @@ export default function Reports() {
       </div>
 
       {/* Performance Metrics */}
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-3">
         {performanceMetrics.map((metric, index) => (
           <Card key={metric.label} className="glass-card hover:shadow-accent transition-all duration-300">
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <p className="text-sm text-muted-foreground mb-1">{metric.label}</p>
-                  <div className="flex items-center space-x-2 mb-1">
-                    <span className="text-2xl font-bold text-foreground">{metric.value}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-muted-foreground mb-1 truncate">{metric.label}</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-2 mb-1">
+                    <span className="text-xl sm:text-2xl font-bold text-foreground truncate">{metric.value}</span>
                     <div className={`flex items-center text-sm font-medium ${
                       metric.positive ? 'text-success' : 'text-destructive'
                     }`}>
@@ -249,7 +249,7 @@ export default function Reports() {
                   </div>
                   <p className="text-xs text-muted-foreground">{metric.subtitle}</p>
                 </div>
-                <div className="ml-4">
+                <div className="ml-2 sm:ml-4 shrink-0">
                   <Sparkline data={metric.sparkline} color={metric.color} />
                 </div>
               </div>
@@ -259,14 +259,14 @@ export default function Reports() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2">
         {/* Audience Breakdown */}
         <Card className="glass-card">
           <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
               <CardTitle className="text-lg font-semibold text-foreground">Audience</CardTitle>
               <Select defaultValue="gender">
-                <SelectTrigger className="w-32 h-8 text-xs glass-light border-glass-border">
+                <SelectTrigger className="w-full sm:w-32 h-8 text-xs glass-light border-glass-border">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -277,16 +277,16 @@ export default function Reports() {
               </Select>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 sm:px-6">
             <div className="flex items-center justify-center mb-4">
-              <ResponsiveContainer width={200} height={200}>
+              <ResponsiveContainer width="100%" height={180} minWidth={180}>
                 <PieChart>
                   <Pie
                     data={audienceData}
-                    cx={100}
-                    cy={100}
-                    innerRadius={60}
-                    outerRadius={90}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={50}
+                    outerRadius={80}
                     dataKey="value"
                   >
                     {audienceData.map((entry, index) => (
@@ -296,15 +296,15 @@ export default function Reports() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
               {audienceData.map((item, index) => (
                 <div key={item.name} className="flex flex-col items-center">
-                  <div className="flex items-center space-x-1 mb-1">
+                  <div className="flex items-center space-x-2 mb-1">
                     <div 
-                      className="w-2 h-2 rounded-full" 
+                      className="w-3 h-3 rounded-full" 
                       style={{ backgroundColor: item.color }}
                     />
-                    <span className="text-xs text-muted-foreground capitalize">{item.name.split(' ')[0]}</span>
+                    <span className="text-xs text-muted-foreground">{item.name}</span>
                   </div>
                   <span className="text-sm font-medium text-foreground">{item.value}%</span>
                 </div>
@@ -316,16 +316,16 @@ export default function Reports() {
         {/* Performance Chart */}
         <Card className="glass-card">
           <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
               <CardTitle className="text-lg font-semibold text-foreground">Performance</CardTitle>
-              <Button variant="ghost" size="sm" className="h-8 text-xs">
+              <Button variant="ghost" size="sm" className="h-8 text-xs w-full sm:w-auto">
                 Compare
               </Button>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 sm:px-6">
             <div className="mb-4">
-              <div className="flex items-center space-x-4 text-xs">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
                 <div className="flex items-center space-x-1">
                   <div className="w-2 h-2 rounded-full bg-success" />
                   <span className="text-muted-foreground">Call Volume</span>
@@ -341,7 +341,7 @@ export default function Reports() {
               </div>
             </div>
             
-            <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height={180}>
               <LineChart data={performanceData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted))" />
                 <XAxis 
@@ -388,69 +388,71 @@ export default function Reports() {
 
       {/* Recent Reports Table */}
       <Card className="glass-card">
-        <CardHeader>
-          <div className="flex items-center justify-between">
+        <CardHeader className="px-4 sm:px-6">
+          <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <div>
               <CardTitle className="text-lg font-semibold text-foreground">Recent reports</CardTitle>
               <CardDescription className="text-sm text-muted-foreground">
                 View key metrics for all active collection campaigns.
               </CardDescription>
             </div>
-            <Button variant="ghost" size="sm" className="text-accent">
+            <Button variant="ghost" size="sm" className="text-accent w-full sm:w-auto">
               View reports
             </Button>
           </div>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-xs font-medium text-muted-foreground">Report</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">Accounts Contacted</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">Collection Rate</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">Contact Rate</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">Amount Collected</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">Target</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">Manager</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {recentReports.map((report) => (
-                <TableRow key={report.id}>
-                  <TableCell>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-gradient-accent rounded-lg flex items-center justify-center">
-                        <BarChart3 className="w-4 h-4 text-accent-foreground" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-sm text-foreground">{report.title}</div>
-                        <div className="text-xs text-muted-foreground">{report.description}</div>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="font-mono text-sm">{report.audienceReached}</TableCell>
-                  <TableCell className="font-mono text-sm">{report.roi}</TableCell>
-                  <TableCell className="font-mono text-sm">{report.ctr}</TableCell>
-                  <TableCell className="font-mono text-sm">{report.cpl}</TableCell>
-                  <TableCell className="font-mono text-sm">{report.budget}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center text-xs font-bold text-accent-foreground">
-                        {report.avatar}
-                      </div>
-                      <span className="text-sm text-foreground">{report.manager}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="sm">
-                      <MoreHorizontal className="w-4 h-4" />
-                    </Button>
-                  </TableCell>
+        <CardContent className="px-0 sm:px-6">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-xs font-medium text-muted-foreground whitespace-nowrap px-4 sm:px-2">Report</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground whitespace-nowrap">Accounts Contacted</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground whitespace-nowrap">Collection Rate</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground whitespace-nowrap">Contact Rate</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground whitespace-nowrap">Amount Collected</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground whitespace-nowrap">Target</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground whitespace-nowrap">Manager</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground whitespace-nowrap px-4 sm:px-2">Action</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {recentReports.map((report) => (
+                  <TableRow key={report.id}>
+                    <TableCell className="px-4 sm:px-2">
+                      <div className="flex items-center space-x-3 min-w-0">
+                        <div className="w-8 h-8 bg-gradient-accent rounded-lg flex items-center justify-center shrink-0">
+                          <BarChart3 className="w-4 h-4 text-accent-foreground" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="font-medium text-sm text-foreground truncate">{report.title}</div>
+                          <div className="text-xs text-muted-foreground truncate">{report.description}</div>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-mono text-sm whitespace-nowrap">{report.audienceReached}</TableCell>
+                    <TableCell className="font-mono text-sm whitespace-nowrap">{report.roi}</TableCell>
+                    <TableCell className="font-mono text-sm whitespace-nowrap">{report.ctr}</TableCell>
+                    <TableCell className="font-mono text-sm whitespace-nowrap">{report.cpl}</TableCell>
+                    <TableCell className="font-mono text-sm whitespace-nowrap">{report.budget}</TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      <div className="flex items-center space-x-2 min-w-0">
+                        <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center text-xs font-bold text-accent-foreground shrink-0">
+                          {report.avatar}
+                        </div>
+                        <span className="text-sm text-foreground truncate">{report.manager}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="px-4 sm:px-2">
+                      <Button variant="ghost" size="sm">
+                        <MoreHorizontal className="w-4 h-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>
