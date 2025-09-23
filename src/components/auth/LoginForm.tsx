@@ -69,12 +69,12 @@ export function LoginForm({ onLogin }: LoginFormProps) {
           <img 
             src={jdgkLogo} 
             alt="JDGK Business Solutions" 
-            className="h-24 w-auto object-contain mx-auto"
+            className="h-32 w-auto object-contain mx-auto"
           />
         </div>
         <div>
           <CardDescription className="text-muted-foreground mt-2">
-            Bank Collections Management System
+            Business Management System
           </CardDescription>
         </div>
       </CardHeader>

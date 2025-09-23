@@ -126,7 +126,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
           <img 
             src={jdgkLogo} 
             alt="JDGK Business Solutions" 
-            className={collapsed ? "h-8 w-auto object-contain" : "h-10 w-auto object-contain"}
+            className={collapsed ? "h-10 w-auto object-contain" : "h-16 w-auto object-contain"}
           />
         </div>
 
