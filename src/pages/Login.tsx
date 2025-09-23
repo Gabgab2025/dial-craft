@@ -7,7 +7,7 @@ interface LoginPageProps {
 
 export default function Login({ onLogin }: LoginPageProps) {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 dark">
+    <div className="min-h-screen bg-gradient-to-br from-orange-400 to-yellow-400 flex items-center justify-center p-4 dark">
       {/* Split Screen Container */}
       <div className="max-w-6xl w-full bg-card rounded-2xl shadow-2xl overflow-hidden border border-border">
         <div className="grid lg:grid-cols-2 min-h-[600px]">
