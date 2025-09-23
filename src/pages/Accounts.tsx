@@ -165,31 +165,31 @@ export default function Accounts() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6 space-y-6 animate-fade-in">
+    <div className="min-h-screen bg-background p-3 sm:p-6 space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="glass-card p-6 border-glass-border">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-3xl font-bold font-poppins text-foreground">
+      <div className="glass-card p-4 sm:p-6 border-glass-border">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 mb-4">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-2xl sm:text-3xl font-bold font-poppins text-foreground break-words">
               Account Management
             </h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-muted-foreground mt-1 text-sm sm:text-base">
               Manage customer accounts and collection status
             </p>
           </div>
-          <div className="flex items-center space-x-3">
-            <Button variant="outline" className="glass-light border-glass-border">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 shrink-0">
+            <Button variant="outline" className="glass-light border-glass-border justify-center">
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
               <DialogTrigger asChild>
-                <Button className="bg-gradient-accent hover:shadow-accent">
+                <Button className="bg-gradient-accent hover:shadow-accent justify-center">
                   <Plus className="w-4 h-4 mr-2" />
                   Add Account
                 </Button>
               </DialogTrigger>
-              <DialogContent className="glass-dialog border-glass-border max-w-4xl">
+              <DialogContent className="glass-dialog border-glass-border max-w-[95vw] sm:max-w-4xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle className="text-foreground">
                     {uploadMode === "single" ? "Add New Account" : "Bulk Upload Accounts"}
@@ -203,7 +203,7 @@ export default function Accounts() {
                 </DialogHeader>
                 
                 {/* Mode Toggle */}
-                <div className="flex items-center space-x-4 py-4 border-b border-glass-border">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 py-4 border-b border-glass-border">
                   <Button
                     variant={uploadMode === "single" ? "default" : "outline"}
                     onClick={() => setUploadMode("single")}
@@ -223,7 +223,7 @@ export default function Accounts() {
                 {uploadMode === "single" ? (
                   /* Single Account Form */
                   <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="name">Customer Name</Label>
                         <Input
@@ -246,7 +246,7 @@ export default function Accounts() {
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="balance">Outstanding Balance</Label>
                         <Input
@@ -270,7 +270,7 @@ export default function Accounts() {
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="status">Status</Label>
                         <Select value={newAccount.status} onValueChange={(value: Account["status"]) => setNewAccount({...newAccount, status: value})}>
@@ -331,7 +331,7 @@ export default function Accounts() {
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <Label>Upload File</Label>
-                        <div className="border-2 border-dashed border-glass-border rounded-lg p-6 glass-light">
+                        <div className="border-2 border-dashed border-glass-border rounded-lg p-4 sm:p-6 glass-light">
                           <div className="text-center">
                             <Input
                               type="file"
@@ -352,12 +352,12 @@ export default function Accounts() {
                       {uploadedFile && (
                         <div className="glass-light p-4 rounded-lg border border-success/20">
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                              <div className="w-8 h-8 bg-success/10 rounded-lg flex items-center justify-center">
+                            <div className="flex items-center space-x-2 min-w-0 flex-1">
+                              <div className="w-8 h-8 bg-success/10 rounded-lg flex items-center justify-center shrink-0">
                                 <FileText className="w-4 h-4 text-success" />
                               </div>
-                              <div>
-                                <p className="text-sm font-medium text-foreground">{uploadedFile.name}</p>
+                              <div className="min-w-0 flex-1">
+                                <p className="text-sm font-medium text-foreground truncate">{uploadedFile.name}</p>
                                 <p className="text-xs text-muted-foreground">
                                   {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
                                 </p>
@@ -367,7 +367,7 @@ export default function Accounts() {
                               variant="ghost"
                               size="sm"
                               onClick={() => setUploadedFile(null)}
-                              className="text-destructive hover:bg-destructive/10"
+                              className="text-destructive hover:bg-destructive/10 shrink-0 ml-2"
                             >
                               Remove
                             </Button>
@@ -379,7 +379,7 @@ export default function Accounts() {
                     {/* Bulk Assignment Options */}
                     <div className="space-y-4">
                       <h4 className="text-sm font-medium text-foreground">Bulk Assignment Settings</h4>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label>Default Status</Label>
                           <Select 
@@ -420,7 +420,7 @@ export default function Accounts() {
                         </div>
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label>Department</Label>
                           <Select 
@@ -476,7 +476,7 @@ export default function Accounts() {
                   </div>
                 )}
                 
-                <div className="flex justify-end gap-3 pt-4 border-t border-glass-border">
+                <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-glass-border">
                   <Button 
                     variant="outline" 
                     onClick={() => {
@@ -484,12 +484,12 @@ export default function Accounts() {
                       setUploadMode("single")
                       setUploadedFile(null)
                     }}
-                    className="glass-light border-glass-border"
+                    className="glass-light border-glass-border w-full sm:w-auto"
                   >
                     Cancel
                   </Button>
                   <Button 
-                    className="bg-gradient-accent hover:shadow-accent"
+                    className="bg-gradient-accent hover:shadow-accent w-full sm:w-auto"
                     disabled={uploadMode === "bulk" && !uploadedFile}
                     onClick={() => {
                       if (uploadMode === "single") {
@@ -531,8 +531,8 @@ export default function Accounts() {
         </div>
         
         {/* Search and Filters */}
-        <div className="flex items-center space-x-4">
-          <div className="relative flex-1 max-w-md">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+          <div className="relative flex-1 max-w-none sm:max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
               placeholder="Search accounts..."
@@ -541,7 +541,7 @@ export default function Accounts() {
               className="glass-light border-glass-border pl-10 focus:ring-accent focus:border-accent"
             />
           </div>
-          <Button variant="outline" className="glass-light border-glass-border">
+          <Button variant="outline" className="glass-light border-glass-border justify-center">
             <Filter className="w-4 h-4 mr-2" />
             Filters
           </Button>
@@ -549,16 +549,16 @@ export default function Accounts() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-6 md:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-4">
         <Card className="glass-card hover:shadow-accent transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               Total Accounts
             </CardTitle>
-            <User className="h-4 w-4 text-accent" />
+            <User className="h-4 w-4 text-accent shrink-0" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold font-mono text-foreground">
+            <div className="text-xl sm:text-2xl font-bold font-mono text-foreground">
               {mockAccounts.length}
             </div>
             <p className="text-xs text-muted-foreground">
@@ -569,13 +569,13 @@ export default function Accounts() {
 
         <Card className="glass-card hover:shadow-accent transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               Outstanding Balance
             </CardTitle>
-            <DollarSign className="h-4 w-4 text-accent" />
+            <DollarSign className="h-4 w-4 text-accent shrink-0" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold font-mono text-foreground">
+            <div className="text-lg sm:text-2xl font-bold font-mono text-foreground">
               {formatCurrency(mockAccounts.reduce((sum, acc) => sum + acc.balance, 0))}
             </div>
             <p className="text-xs text-muted-foreground">
@@ -586,13 +586,13 @@ export default function Accounts() {
 
         <Card className="glass-card hover:shadow-accent transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               Delinquent
             </CardTitle>
-            <Calendar className="h-4 w-4 text-destructive" />
+            <Calendar className="h-4 w-4 text-destructive shrink-0" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold font-mono text-destructive">
+            <div className="text-xl sm:text-2xl font-bold font-mono text-destructive">
               {mockAccounts.filter(acc => acc.status === 'untouched').length}
             </div>
             <p className="text-xs text-muted-foreground">
@@ -603,13 +603,13 @@ export default function Accounts() {
 
         <Card className="glass-card hover:shadow-accent transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               Success Rate
             </CardTitle>
-            <Phone className="h-4 w-4 text-success" />
+            <Phone className="h-4 w-4 text-success shrink-0" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold font-mono text-success">
+            <div className="text-xl sm:text-2xl font-bold font-mono text-success">
               72%
             </div>
             <p className="text-xs text-muted-foreground">
@@ -621,7 +621,7 @@ export default function Accounts() {
 
       {/* Accounts Table */}
       <Card className="glass-card">
-        <CardHeader>
+        <CardHeader className="px-4 sm:px-6">
           <CardTitle className="flex items-center space-x-2">
             <User className="w-5 h-5 text-accent" />
             <span>Customer Accounts</span>
@@ -630,18 +630,18 @@ export default function Accounts() {
             {filteredAccounts.length} of {mockAccounts.length} accounts shown
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-0 sm:px-6">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[800px]">
               <thead>
                 <tr className="border-b border-glass-border">
-                  <th className="text-left py-3 px-4 font-medium text-muted-foreground">Account</th>
-                  <th className="text-left py-3 px-4 font-medium text-muted-foreground">Contact</th>
-                  <th className="text-left py-3 px-4 font-medium text-muted-foreground">Balance</th>
-                  <th className="text-left py-3 px-4 font-medium text-muted-foreground">Status</th>
-                  <th className="text-left py-3 px-4 font-medium text-muted-foreground">Due Date</th>
-                  <th className="text-left py-3 px-4 font-medium text-muted-foreground">Assigned</th>
-                  <th className="text-right py-3 px-4 font-medium text-muted-foreground">Actions</th>
+                  <th className="text-left py-3 px-2 sm:px-4 font-medium text-muted-foreground whitespace-nowrap">Account</th>
+                  <th className="text-left py-3 px-2 sm:px-4 font-medium text-muted-foreground whitespace-nowrap">Contact</th>
+                  <th className="text-left py-3 px-2 sm:px-4 font-medium text-muted-foreground whitespace-nowrap">Balance</th>
+                  <th className="text-left py-3 px-2 sm:px-4 font-medium text-muted-foreground whitespace-nowrap">Status</th>
+                  <th className="text-left py-3 px-2 sm:px-4 font-medium text-muted-foreground whitespace-nowrap">Due Date</th>
+                  <th className="text-left py-3 px-2 sm:px-4 font-medium text-muted-foreground whitespace-nowrap">Assigned</th>
+                  <th className="text-right py-3 px-2 sm:px-4 font-medium text-muted-foreground whitespace-nowrap">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -651,15 +651,15 @@ export default function Accounts() {
                     className="border-b border-glass-border/50 hover:bg-glass-light/30 transition-colors"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <td className="py-4 px-4">
-                      <div className="space-y-1">
-                        <div className="font-medium text-foreground">{account.name}</div>
+                    <td className="py-4 px-2 sm:px-4">
+                      <div className="space-y-1 min-w-0">
+                        <div className="font-medium text-foreground truncate">{account.name}</div>
                         <div className="text-sm text-muted-foreground font-mono">{account.id}</div>
                       </div>
                     </td>
-                    <td className="py-4 px-4">
-                      <div className="space-y-1">
-                        <div className="font-mono text-sm text-foreground">
+                    <td className="py-4 px-2 sm:px-4">
+                      <div className="space-y-1 min-w-0">
+                        <div className="font-mono text-sm text-foreground truncate">
                           {account.phoneNumbers[0]}
                           {account.phoneNumbers.length > 1 && (
                             <Badge variant="secondary" className="ml-2 text-xs">
@@ -672,31 +672,36 @@ export default function Accounts() {
                         </div>
                       </div>
                     </td>
-                    <td className="py-4 px-4">
-                      <div className="font-mono font-bold text-foreground">
+                    <td className="py-4 px-2 sm:px-4">
+                      <div className="font-mono font-bold text-foreground whitespace-nowrap">
                         {formatCurrency(account.balance)}
                       </div>
                     </td>
-                    <td className="py-4 px-4">
+                    <td className="py-4 px-2 sm:px-4">
                       <Badge className={getStatusColor(account.status)}>
                         <span className="mr-1">{getStatusIcon(account.status)}</span>
-                        {account.status.replace('_', ' ').charAt(0).toUpperCase() + account.status.replace('_', ' ').slice(1)}
+                        <span className="hidden sm:inline">
+                          {account.status.replace('_', ' ').charAt(0).toUpperCase() + account.status.replace('_', ' ').slice(1)}
+                        </span>
+                        <span className="sm:hidden">
+                          {account.status.charAt(0).toUpperCase()}
+                        </span>
                       </Badge>
                     </td>
-                    <td className="py-4 px-4">
-                      <div className="font-mono text-sm text-foreground">{account.dueDate}</div>
+                    <td className="py-4 px-2 sm:px-4">
+                      <div className="font-mono text-sm text-foreground whitespace-nowrap">{account.dueDate}</div>
                     </td>
-                    <td className="py-4 px-4">
-                      <div className="text-sm text-muted-foreground">{account.assignedTo}</div>
+                    <td className="py-4 px-2 sm:px-4">
+                      <div className="text-sm text-muted-foreground truncate max-w-[100px]">{account.assignedTo}</div>
                     </td>
-                    <td className="py-4 px-4 text-right">
-                      <div className="flex items-center justify-end space-x-2">
+                    <td className="py-4 px-2 sm:px-4 text-right">
+                      <div className="flex items-center justify-end space-x-1 sm:space-x-2">
                         <Button 
                           size="sm" 
-                          className="bg-gradient-accent hover:shadow-accent"
+                          className="bg-gradient-accent hover:shadow-accent text-xs sm:text-sm"
                         >
-                          <Phone className="w-3 h-3 mr-1" />
-                          Call
+                          <Phone className="w-3 h-3 mr-0 sm:mr-1" />
+                          <span className="hidden sm:inline">Call</span>
                         </Button>
                         <Button variant="ghost" size="sm">
                           <MoreHorizontal className="w-4 h-4" />
