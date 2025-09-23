@@ -3,6 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { 
   Search, 
   Plus, 
@@ -124,6 +128,17 @@ function formatCurrency(amount: number) {
 export default function Accounts() {
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredAccounts, setFilteredAccounts] = useState(mockAccounts)
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [newAccount, setNewAccount] = useState({
+    name: "",
+    phoneNumbers: [""],
+    balance: "",
+    dueDate: "",
+    status: "untouched" as Account["status"],
+    assignedTo: "",
+    bankPartner: "",
+    remarks: ""
+  })
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
@@ -158,10 +173,156 @@ export default function Accounts() {
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
-            <Button className="bg-gradient-accent hover:shadow-accent">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Account
-            </Button>
+            <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-gradient-accent hover:shadow-accent">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Account
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="glass-card border-glass-border max-w-2xl">
+                <DialogHeader>
+                  <DialogTitle className="text-foreground">Add New Account</DialogTitle>
+                  <DialogDescription className="text-muted-foreground">
+                    Create a new customer account for collection management.
+                  </DialogDescription>
+                </DialogHeader>
+                
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Customer Name</Label>
+                      <Input
+                        id="name"
+                        placeholder="Enter customer name"
+                        value={newAccount.name}
+                        onChange={(e) => setNewAccount({...newAccount, name: e.target.value})}
+                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        placeholder="(555) 123-4567"
+                        value={newAccount.phoneNumbers[0]}
+                        onChange={(e) => setNewAccount({...newAccount, phoneNumbers: [e.target.value]})}
+                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="balance">Outstanding Balance</Label>
+                      <Input
+                        id="balance"
+                        type="number"
+                        placeholder="0.00"
+                        value={newAccount.balance}
+                        onChange={(e) => setNewAccount({...newAccount, balance: e.target.value})}
+                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="dueDate">Due Date</Label>
+                      <Input
+                        id="dueDate"
+                        type="date"
+                        value={newAccount.dueDate}
+                        onChange={(e) => setNewAccount({...newAccount, dueDate: e.target.value})}
+                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="status">Status</Label>
+                      <Select value={newAccount.status} onValueChange={(value: Account["status"]) => setNewAccount({...newAccount, status: value})}>
+                        <SelectTrigger className="glass-light border-glass-border">
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="untouched">Untouched</SelectItem>
+                          <SelectItem value="touched">Touched</SelectItem>
+                          <SelectItem value="ptp">PTP</SelectItem>
+                          <SelectItem value="collected">Collected</SelectItem>
+                          <SelectItem value="not_collected">Not Collected</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="assignedTo">Assigned To</Label>
+                      <Select value={newAccount.assignedTo} onValueChange={(value) => setNewAccount({...newAccount, assignedTo: value})}>
+                        <SelectTrigger className="glass-light border-glass-border">
+                          <SelectValue placeholder="Select agent" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Agent A">Agent A</SelectItem>
+                          <SelectItem value="Agent B">Agent B</SelectItem>
+                          <SelectItem value="Agent C">Agent C</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="bankPartner">Bank Partner</Label>
+                    <Input
+                      id="bankPartner"
+                      placeholder="Enter bank partner name"
+                      value={newAccount.bankPartner}
+                      onChange={(e) => setNewAccount({...newAccount, bankPartner: e.target.value})}
+                      className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="remarks">Remarks</Label>
+                    <Textarea
+                      id="remarks"
+                      placeholder="Add any relevant notes or remarks..."
+                      value={newAccount.remarks}
+                      onChange={(e) => setNewAccount({...newAccount, remarks: e.target.value})}
+                      className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                      rows={3}
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex justify-end gap-3 pt-4 border-t border-glass-border">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setIsAddDialogOpen(false)}
+                    className="glass-light border-glass-border"
+                  >
+                    Cancel
+                  </Button>
+                  <Button 
+                    className="bg-gradient-accent hover:shadow-accent"
+                    onClick={() => {
+                      // Handle form submission here
+                      console.log("New account:", newAccount)
+                      setIsAddDialogOpen(false)
+                      // Reset form
+                      setNewAccount({
+                        name: "",
+                        phoneNumbers: [""],
+                        balance: "",
+                        dueDate: "",
+                        status: "untouched",
+                        assignedTo: "",
+                        bankPartner: "",
+                        remarks: ""
+                      })
+                    }}
+                  >
+                    Create Account
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
         
