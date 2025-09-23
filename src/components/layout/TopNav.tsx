@@ -61,11 +61,6 @@ export function TopNav({ userEmail = "agent@bank.com", userRole = "agent", onLog
       <div className="flex items-center space-x-2 sm:space-x-4">
         <SidebarTrigger className="hover:bg-glass-light p-2 rounded-lg transition-colors lg:hidden" />
         
-        {/* Logo/Brand - visible on mobile when sidebar is closed */}
-        <div className="lg:hidden">
-          <h1 className="text-lg font-bold font-poppins text-foreground">SecureCall</h1>
-        </div>
-        
         {/* Global Search - hidden on small screens */}
         <div className="relative max-w-md hidden sm:block">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
