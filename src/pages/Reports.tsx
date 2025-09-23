@@ -34,68 +34,68 @@ import {
 
 // Mock data for charts
 const performanceData = [
-  { name: '3', leadGen: 45, salesConv: 38, engagement: 52 },
-  { name: '6', leadGen: 52, salesConv: 42, engagement: 48 },
-  { name: '9', leadGen: 48, salesConv: 45, engagement: 55 },
-  { name: '12', leadGen: 61, salesConv: 52, engagement: 58 },
-  { name: '15', leadGen: 55, salesConv: 48, engagement: 62 },
-  { name: '18', leadGen: 67, salesConv: 55, engagement: 65 },
-  { name: '21', leadGen: 63, salesConv: 58, engagement: 68 },
-  { name: '24', leadGen: 71, salesConv: 62, engagement: 72 },
-  { name: '27', leadGen: 68, salesConv: 59, engagement: 75 },
-  { name: '30', leadGen: 74, salesConv: 65, engagement: 78 }
+  { name: '3', callVolume: 145, collections: 38, contactRate: 72 },
+  { name: '6', callVolume: 152, collections: 42, contactRate: 68 },
+  { name: '9', callVolume: 148, collections: 45, contactRate: 75 },
+  { name: '12', callVolume: 161, collections: 52, contactRate: 78 },
+  { name: '15', callVolume: 155, collections: 48, contactRate: 82 },
+  { name: '18', callVolume: 167, collections: 55, contactRate: 85 },
+  { name: '21', callVolume: 163, collections: 58, contactRate: 88 },
+  { name: '24', callVolume: 171, collections: 62, contactRate: 92 },
+  { name: '27', callVolume: 168, collections: 59, contactRate: 89 },
+  { name: '30', callVolume: 174, collections: 65, contactRate: 95 }
 ]
 
 const audienceData = [
-  { name: 'Existing Customers', value: 45, color: 'hsl(var(--primary))' },
-  { name: 'New Prospects', value: 35, color: 'hsl(var(--accent))' },
-  { name: 'Referrals', value: 20, color: 'hsl(var(--primary-glow))' }
+  { name: 'Current Accounts', value: 45, color: 'hsl(var(--primary))' },
+  { name: 'Overdue Accounts', value: 35, color: 'hsl(var(--accent))' },
+  { name: 'New Placements', value: 20, color: 'hsl(var(--primary-glow))' }
 ]
 
 const sparklineData = {
-  leadGen: [42, 45, 48, 52, 49, 55, 58, 61, 59, 63, 67, 71, 68, 74],
-  salesConv: [38, 42, 39, 45, 48, 44, 52, 49, 55, 58, 62, 59, 65],
-  engagement: [52, 48, 55, 58, 62, 59, 65, 68, 72, 69, 75, 78]
+  callVolume: [142, 145, 148, 152, 149, 155, 158, 161, 159, 163, 167, 171, 168, 174],
+  collections: [38, 42, 39, 45, 48, 44, 52, 49, 55, 58, 62, 59, 65],
+  contactRate: [72, 68, 75, 78, 82, 79, 85, 88, 92, 89, 95, 91]
 }
 
 const recentReports = [
   {
     id: "RPT-001",
-    title: "Q4 Performance Review",
-    description: "Comprehensive quarterly performance analysis",
-    audienceReached: "125,000",
-    roi: "3.2x",
-    ctr: "2.5%",
-    cpl: "$2.80",
-    budget: "$100/day",
-    manager: "Louis Jensen",
-    avatar: "LJ",
+    title: "Daily Collections Report",
+    description: "Comprehensive daily collection performance analysis",
+    audienceReached: "1,250",
+    roi: "12.3%",
+    ctr: "68.5%",
+    cpl: "$47,832",
+    budget: "Target: $50k",
+    manager: "Sarah Johnson",
+    avatar: "SJ",
     status: "completed"
   },
   {
     id: "RPT-002", 
-    title: "Lead Generation Campaign",
-    description: "Monthly lead generation metrics and trends",
-    audienceReached: "89,000",
-    roi: "2.1x",
-    ctr: "3.8%",
-    cpl: "$1.90",
-    budget: "$80/day",
-    manager: "Sarah Chen",
-    avatar: "SC",
+    title: "Agent Performance Report",
+    description: "Individual agent call metrics and success rates",
+    audienceReached: "892",
+    roi: "15.7%",
+    ctr: "72.1%",
+    cpl: "$32,140",
+    budget: "Target: $35k",
+    manager: "Mike Chen",
+    avatar: "MC",
     status: "active"
   },
   {
     id: "RPT-003",
-    title: "Customer Retention Analysis", 
-    description: "Analysis of customer lifecycle and retention",
-    audienceReached: "95,000",
-    roi: "2.8x",
-    ctr: "2.2%",
-    cpl: "$3.10",
-    budget: "$90/day",
-    manager: "Mike Torres",
-    avatar: "MT",
+    title: "Account Status Analysis", 
+    description: "Portfolio overview with aging and disposition tracking",
+    audienceReached: "2,150",
+    roi: "8.9%",
+    ctr: "61.2%",
+    cpl: "$28,750",
+    budget: "Target: $30k",
+    manager: "Lisa Torres",
+    avatar: "LT",
     status: "completed"
   }
 ]
@@ -118,30 +118,30 @@ const Sparkline = ({ data, color = "hsl(var(--primary))" }: { data: number[], co
 
 const performanceMetrics = [
   { 
-    label: "Lead generation", 
-    value: "2,245", 
-    change: "+28%", 
+    label: "Daily Call Volume", 
+    value: "1,245", 
+    change: "+18%", 
     positive: true,
     subtitle: "from last 30 days",
-    sparkline: sparklineData.leadGen,
+    sparkline: sparklineData.callVolume,
     color: "hsl(var(--success))"
   },
   { 
-    label: "Sales Conversion", 
-    value: "393", 
-    change: "-12%", 
+    label: "Collections Today", 
+    value: "$47,832", 
+    change: "-8%", 
     positive: false,
     subtitle: "from last 30 days",
-    sparkline: sparklineData.salesConv,
+    sparkline: sparklineData.collections,
     color: "hsl(var(--destructive))"
   },
   { 
-    label: "Engagement", 
-    value: "9,026", 
-    change: "+67%", 
+    label: "Contact Rate", 
+    value: "68.5%", 
+    change: "+12%", 
     positive: true,
     subtitle: "from last 30 days",
-    sparkline: sparklineData.engagement,
+    sparkline: sparklineData.contactRate,
     color: "hsl(var(--success))"
   }
 ]
@@ -328,15 +328,15 @@ export default function Reports() {
               <div className="flex items-center space-x-4 text-xs">
                 <div className="flex items-center space-x-1">
                   <div className="w-2 h-2 rounded-full bg-success" />
-                  <span className="text-muted-foreground">Lead generation</span>
+                  <span className="text-muted-foreground">Call Volume</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <div className="w-2 h-2 rounded-full bg-destructive" />
-                  <span className="text-muted-foreground">Sales Conversion</span>
+                  <span className="text-muted-foreground">Collections</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <div className="w-2 h-2 rounded-full bg-accent" />
-                  <span className="text-muted-foreground">Engagement</span>
+                  <span className="text-muted-foreground">Contact Rate</span>
                 </div>
               </div>
             </div>
@@ -361,21 +361,21 @@ export default function Reports() {
                 />
                 <Line 
                   type="monotone" 
-                  dataKey="leadGen" 
+                  dataKey="callVolume" 
                   stroke="hsl(var(--success))" 
                   strokeWidth={2}
                   dot={false}
                 />
                 <Line 
                   type="monotone" 
-                  dataKey="salesConv" 
+                  dataKey="collections" 
                   stroke="hsl(var(--destructive))" 
                   strokeWidth={2}
                   dot={false}
                 />
                 <Line 
                   type="monotone" 
-                  dataKey="engagement" 
+                  dataKey="contactRate" 
                   stroke="hsl(var(--accent))" 
                   strokeWidth={2}
                   dot={false}
@@ -393,7 +393,7 @@ export default function Reports() {
             <div>
               <CardTitle className="text-lg font-semibold text-foreground">Recent reports</CardTitle>
               <CardDescription className="text-sm text-muted-foreground">
-                View key metrics for all active campaigns.
+                View key metrics for all active collection campaigns.
               </CardDescription>
             </div>
             <Button variant="ghost" size="sm" className="text-accent">
@@ -406,11 +406,11 @@ export default function Reports() {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-xs font-medium text-muted-foreground">Report</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">Audience reached</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">ROI</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">CTR</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">CPL</TableHead>
-                <TableHead className="text-xs font-medium text-muted-foreground">Budget</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Accounts Contacted</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Collection Rate</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Contact Rate</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Amount Collected</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Target</TableHead>
                 <TableHead className="text-xs font-medium text-muted-foreground">Manager</TableHead>
                 <TableHead className="text-xs font-medium text-muted-foreground">Action</TableHead>
               </TableRow>
