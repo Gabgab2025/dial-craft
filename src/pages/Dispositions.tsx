@@ -251,7 +251,7 @@ export default function Dispositions() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6 space-y-6 animate-fade-in">
+    <div className="min-h-screen bg-background p-6 grid grid-rows-[auto_auto_1fr] gap-6 animate-fade-in">
       {/* Header */}
       <div className="glass-card p-6 border-glass-border">
         <div className="flex items-center justify-between mb-4">
@@ -293,7 +293,7 @@ export default function Dispositions() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-6 md:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="glass-card hover:shadow-accent transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -356,12 +356,12 @@ export default function Dispositions() {
       </div>
 
       {/* Dispositions Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 auto-rows-max">
         {filteredDispositions.map((disposition, index) => (
           <Card 
             key={disposition.id} 
-            className="glass-card hover:shadow-accent transition-all duration-300 animate-slide-up"
-            style={{ animationDelay: `${index * 0.1}s` }}
+            className="glass-card hover:shadow-accent transition-all duration-300 animate-slide-up h-fit"
+            style={{ animationDelay: `${index * 0.05}s` }}
           >
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between">
@@ -433,23 +433,25 @@ export default function Dispositions() {
             </CardContent>
           </Card>
         ))}
-      </div>
 
-      {filteredDispositions.length === 0 && (
-        <Card className="glass-card">
-          <CardContent className="text-center py-12">
-            <MessageSquare className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">No Dispositions Found</h3>
-            <p className="text-muted-foreground mb-4">
-              No dispositions match your current search and filter criteria.
-            </p>
-            <Button className="bg-gradient-accent hover:shadow-accent">
-              <Plus className="w-4 h-4 mr-2" />
-              Create New Disposition
-            </Button>
-          </CardContent>
-        </Card>
-      )}
+        {filteredDispositions.length === 0 && (
+          <div className="col-span-full">
+            <Card className="glass-card">
+              <CardContent className="text-center py-12">
+                <MessageSquare className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">No Dispositions Found</h3>
+                <p className="text-muted-foreground mb-4">
+                  No dispositions match your current search and filter criteria.
+                </p>
+                <Button className="bg-gradient-accent hover:shadow-accent">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create New Disposition
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </div>
 
       {/* Edit Disposition Dialog */}
       <Dialog open={!!editingDisposition} onOpenChange={() => cancelEdit()}>
