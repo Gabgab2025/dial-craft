@@ -116,7 +116,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
 
   return (
     <Sidebar
-      className={`${collapsed ? "w-16" : "w-64"} glass border-r border-sidebar-border transition-all duration-300`}
+      className="fixed inset-y-0 left-0 z-50 w-64 glass border-r border-sidebar-border transition-transform duration-300 data-[state=open]:translate-x-0 data-[state=closed]:-translate-x-full lg:relative lg:translate-x-0 lg:data-[state=closed]:w-16"
       collapsible="icon"
     >
       <SidebarContent className="bg-transparent">
@@ -233,7 +233,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
 
       {/* User Profile Dialog */}
       <Dialog open={showProfile} onOpenChange={setShowProfile}>
-        <DialogContent className="glass-dialog border-glass-border max-w-2xl z-50">
+        <DialogContent className="glass-dialog border-glass-border max-w-2xl z-[60] bg-background/95 backdrop-blur-sm">
           <DialogHeader>
             <DialogTitle className="text-foreground flex items-center">
               <User className="w-5 h-5 mr-2 text-accent" />

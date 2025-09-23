@@ -275,3 +275,28 @@ All colors MUST be HSL. Features glassmorphism and micro-interactions.
     transform: translateY(-10px);
   }
 }
+
+/* Mobile Sidebar Overlay */
+.sidebar-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Show overlay when sidebar is open on mobile */
+[data-sidebar="open"] .sidebar-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Ensure dropdowns have proper background and z-index */
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
+}
+
+[role="menu"], [role="listbox"] {
+  background: hsl(var(--background)) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  z-index: 9999 !important;
+}

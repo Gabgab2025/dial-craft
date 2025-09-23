@@ -12,11 +12,11 @@ interface AppLayoutProps {
 
 export function AppLayout({ children, userEmail, userRole, onLogout }: AppLayoutProps) {
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar userRole={userRole} userEmail={userEmail} onLogout={onLogout} />
         
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           <TopNav 
             userEmail={userEmail} 
             userRole={userRole} 
@@ -27,6 +27,9 @@ export function AppLayout({ children, userEmail, userRole, onLogout }: AppLayout
             {children}
           </main>
         </div>
+        
+        {/* Mobile Overlay */}
+        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden sidebar-overlay" />
       </div>
     </SidebarProvider>
   )
