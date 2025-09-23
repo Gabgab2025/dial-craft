@@ -16,7 +16,8 @@ import {
   User,
   DollarSign,
   Calendar,
-  MoreHorizontal
+  MoreHorizontal,
+  FileText
 } from "lucide-react"
 
 interface Account {
@@ -129,6 +130,14 @@ export default function Accounts() {
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredAccounts, setFilteredAccounts] = useState(mockAccounts)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [uploadMode, setUploadMode] = useState<"single" | "bulk">("single")
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null)
+  const [bulkAssignment, setBulkAssignment] = useState({
+    assignedTo: "",
+    department: "",
+    manager: "",
+    status: "untouched" as Account["status"]
+  })
   const [newAccount, setNewAccount] = useState({
     name: "",
     phoneNumbers: [""],
@@ -180,145 +189,340 @@ export default function Accounts() {
                   Add Account
                 </Button>
               </DialogTrigger>
-              <DialogContent className="glass-dialog border-glass-border max-w-2xl">
+              <DialogContent className="glass-dialog border-glass-border max-w-4xl">
                 <DialogHeader>
-                  <DialogTitle className="text-foreground">Add New Account</DialogTitle>
+                  <DialogTitle className="text-foreground">
+                    {uploadMode === "single" ? "Add New Account" : "Bulk Upload Accounts"}
+                  </DialogTitle>
                   <DialogDescription className="text-muted-foreground">
-                    Create a new customer account for collection management.
+                    {uploadMode === "single" 
+                      ? "Create a new customer account for collection management."
+                      : "Upload multiple accounts from CSV/Excel file and assign them to agents, departments, or managers."
+                    }
                   </DialogDescription>
                 </DialogHeader>
                 
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Customer Name</Label>
-                      <Input
-                        id="name"
-                        placeholder="Enter customer name"
-                        value={newAccount.name}
-                        onChange={(e) => setNewAccount({...newAccount, name: e.target.value})}
-                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        placeholder="(555) 123-4567"
-                        value={newAccount.phoneNumbers[0]}
-                        onChange={(e) => setNewAccount({...newAccount, phoneNumbers: [e.target.value]})}
-                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="balance">Outstanding Balance</Label>
-                      <Input
-                        id="balance"
-                        type="number"
-                        placeholder="0.00"
-                        value={newAccount.balance}
-                        onChange={(e) => setNewAccount({...newAccount, balance: e.target.value})}
-                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="dueDate">Due Date</Label>
-                      <Input
-                        id="dueDate"
-                        type="date"
-                        value={newAccount.dueDate}
-                        onChange={(e) => setNewAccount({...newAccount, dueDate: e.target.value})}
-                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="status">Status</Label>
-                      <Select value={newAccount.status} onValueChange={(value: Account["status"]) => setNewAccount({...newAccount, status: value})}>
-                        <SelectTrigger className="glass-light border-glass-border">
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="untouched">Untouched</SelectItem>
-                          <SelectItem value="touched">Touched</SelectItem>
-                          <SelectItem value="ptp">PTP</SelectItem>
-                          <SelectItem value="collected">Collected</SelectItem>
-                          <SelectItem value="not_collected">Not Collected</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="assignedTo">Assigned To</Label>
-                      <Select value={newAccount.assignedTo} onValueChange={(value) => setNewAccount({...newAccount, assignedTo: value})}>
-                        <SelectTrigger className="glass-light border-glass-border">
-                          <SelectValue placeholder="Select agent" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Agent A">Agent A</SelectItem>
-                          <SelectItem value="Agent B">Agent B</SelectItem>
-                          <SelectItem value="Agent C">Agent C</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="bankPartner">Bank Partner</Label>
-                    <Input
-                      id="bankPartner"
-                      placeholder="Enter bank partner name"
-                      value={newAccount.bankPartner}
-                      onChange={(e) => setNewAccount({...newAccount, bankPartner: e.target.value})}
-                      className="glass-light border-glass-border focus:ring-accent focus:border-accent"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="remarks">Remarks</Label>
-                    <Textarea
-                      id="remarks"
-                      placeholder="Add any relevant notes or remarks..."
-                      value={newAccount.remarks}
-                      onChange={(e) => setNewAccount({...newAccount, remarks: e.target.value})}
-                      className="glass-light border-glass-border focus:ring-accent focus:border-accent"
-                      rows={3}
-                    />
-                  </div>
+                {/* Mode Toggle */}
+                <div className="flex items-center space-x-4 py-4 border-b border-glass-border">
+                  <Button
+                    variant={uploadMode === "single" ? "default" : "outline"}
+                    onClick={() => setUploadMode("single")}
+                    className={uploadMode === "single" ? "bg-gradient-accent hover:shadow-accent" : "glass-light border-glass-border"}
+                  >
+                    Single Account
+                  </Button>
+                  <Button
+                    variant={uploadMode === "bulk" ? "default" : "outline"}
+                    onClick={() => setUploadMode("bulk")}
+                    className={uploadMode === "bulk" ? "bg-gradient-accent hover:shadow-accent" : "glass-light border-glass-border"}
+                  >
+                    Bulk Upload
+                  </Button>
                 </div>
+
+                {uploadMode === "single" ? (
+                  /* Single Account Form */
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="name">Customer Name</Label>
+                        <Input
+                          id="name"
+                          placeholder="Enter customer name"
+                          value={newAccount.name}
+                          onChange={(e) => setNewAccount({...newAccount, name: e.target.value})}
+                          className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="phone">Phone Number</Label>
+                        <Input
+                          id="phone"
+                          placeholder="(555) 123-4567"
+                          value={newAccount.phoneNumbers[0]}
+                          onChange={(e) => setNewAccount({...newAccount, phoneNumbers: [e.target.value]})}
+                          className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="balance">Outstanding Balance</Label>
+                        <Input
+                          id="balance"
+                          type="number"
+                          placeholder="0.00"
+                          value={newAccount.balance}
+                          onChange={(e) => setNewAccount({...newAccount, balance: e.target.value})}
+                          className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="dueDate">Due Date</Label>
+                        <Input
+                          id="dueDate"
+                          type="date"
+                          value={newAccount.dueDate}
+                          onChange={(e) => setNewAccount({...newAccount, dueDate: e.target.value})}
+                          className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="status">Status</Label>
+                        <Select value={newAccount.status} onValueChange={(value: Account["status"]) => setNewAccount({...newAccount, status: value})}>
+                          <SelectTrigger className="glass-light border-glass-border">
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="untouched">Untouched</SelectItem>
+                            <SelectItem value="touched">Touched</SelectItem>
+                            <SelectItem value="ptp">PTP</SelectItem>
+                            <SelectItem value="collected">Collected</SelectItem>
+                            <SelectItem value="not_collected">Not Collected</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="assignedTo">Assigned To</Label>
+                        <Select value={newAccount.assignedTo} onValueChange={(value) => setNewAccount({...newAccount, assignedTo: value})}>
+                          <SelectTrigger className="glass-light border-glass-border">
+                            <SelectValue placeholder="Select agent" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Agent A">Agent A</SelectItem>
+                            <SelectItem value="Agent B">Agent B</SelectItem>
+                            <SelectItem value="Agent C">Agent C</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="bankPartner">Bank Partner</Label>
+                      <Input
+                        id="bankPartner"
+                        placeholder="Enter bank partner name"
+                        value={newAccount.bankPartner}
+                        onChange={(e) => setNewAccount({...newAccount, bankPartner: e.target.value})}
+                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="remarks">Remarks</Label>
+                      <Textarea
+                        id="remarks"
+                        placeholder="Add any relevant notes or remarks..."
+                        value={newAccount.remarks}
+                        onChange={(e) => setNewAccount({...newAccount, remarks: e.target.value})}
+                        className="glass-light border-glass-border focus:ring-accent focus:border-accent"
+                        rows={3}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  /* Bulk Upload Form */
+                  <div className="space-y-6 py-4">
+                    {/* File Upload Section */}
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>Upload File</Label>
+                        <div className="border-2 border-dashed border-glass-border rounded-lg p-6 glass-light">
+                          <div className="text-center">
+                            <Input
+                              type="file"
+                              accept=".csv,.xlsx,.xls"
+                              onChange={(e) => setUploadedFile(e.target.files?.[0] || null)}
+                              className="mb-4"
+                            />
+                            <p className="text-sm text-muted-foreground">
+                              Supported formats: CSV, Excel (.xlsx, .xls)
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-2">
+                              Required columns: Name, Phone, Balance, Due Date, Bank Partner
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {uploadedFile && (
+                        <div className="glass-light p-4 rounded-lg border border-success/20">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-8 h-8 bg-success/10 rounded-lg flex items-center justify-center">
+                                <FileText className="w-4 h-4 text-success" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium text-foreground">{uploadedFile.name}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
+                                </p>
+                              </div>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setUploadedFile(null)}
+                              className="text-destructive hover:bg-destructive/10"
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Bulk Assignment Options */}
+                    <div className="space-y-4">
+                      <h4 className="text-sm font-medium text-foreground">Bulk Assignment Settings</h4>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label>Default Status</Label>
+                          <Select 
+                            value={bulkAssignment.status} 
+                            onValueChange={(value: Account["status"]) => setBulkAssignment({...bulkAssignment, status: value})}
+                          >
+                            <SelectTrigger className="glass-light border-glass-border">
+                              <SelectValue placeholder="Select default status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="untouched">Untouched</SelectItem>
+                              <SelectItem value="touched">Touched</SelectItem>
+                              <SelectItem value="ptp">PTP</SelectItem>
+                              <SelectItem value="collected">Collected</SelectItem>
+                              <SelectItem value="not_collected">Not Collected</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label>Assign to Agent</Label>
+                          <Select 
+                            value={bulkAssignment.assignedTo} 
+                            onValueChange={(value) => setBulkAssignment({...bulkAssignment, assignedTo: value})}
+                          >
+                            <SelectTrigger className="glass-light border-glass-border">
+                              <SelectValue placeholder="Select agent (optional)" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="">None</SelectItem>
+                              <SelectItem value="Agent A">Agent A</SelectItem>
+                              <SelectItem value="Agent B">Agent B</SelectItem>
+                              <SelectItem value="Agent C">Agent C</SelectItem>
+                              <SelectItem value="Agent D">Agent D</SelectItem>
+                              <SelectItem value="Agent E">Agent E</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label>Department</Label>
+                          <Select 
+                            value={bulkAssignment.department} 
+                            onValueChange={(value) => setBulkAssignment({...bulkAssignment, department: value})}
+                          >
+                            <SelectTrigger className="glass-light border-glass-border">
+                              <SelectValue placeholder="Select department (optional)" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="">None</SelectItem>
+                              <SelectItem value="Collections">Collections</SelectItem>
+                              <SelectItem value="Customer Service">Customer Service</SelectItem>
+                              <SelectItem value="Recovery">Recovery</SelectItem>
+                              <SelectItem value="Legal">Legal</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label>Manager</Label>
+                          <Select 
+                            value={bulkAssignment.manager} 
+                            onValueChange={(value) => setBulkAssignment({...bulkAssignment, manager: value})}
+                          >
+                            <SelectTrigger className="glass-light border-glass-border">
+                              <SelectValue placeholder="Select manager (optional)" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="">None</SelectItem>
+                              <SelectItem value="Manager A">Manager A</SelectItem>
+                              <SelectItem value="Manager B">Manager B</SelectItem>
+                              <SelectItem value="Manager C">Manager C</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Preview Section */}
+                    {uploadedFile && (
+                      <div className="space-y-2">
+                        <Label>Preview & Validation</Label>
+                        <div className="glass-light p-4 rounded-lg border border-glass-border">
+                          <div className="text-center text-sm text-muted-foreground">
+                            <FileText className="w-8 h-8 mx-auto mb-2 text-accent" />
+                            <p>File validation will be performed after upload</p>
+                            <p className="text-xs">We'll check for required columns and data format</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
                 
                 <div className="flex justify-end gap-3 pt-4 border-t border-glass-border">
                   <Button 
                     variant="outline" 
-                    onClick={() => setIsAddDialogOpen(false)}
+                    onClick={() => {
+                      setIsAddDialogOpen(false)
+                      setUploadMode("single")
+                      setUploadedFile(null)
+                    }}
                     className="glass-light border-glass-border"
                   >
                     Cancel
                   </Button>
                   <Button 
                     className="bg-gradient-accent hover:shadow-accent"
+                    disabled={uploadMode === "bulk" && !uploadedFile}
                     onClick={() => {
-                      // Handle form submission here
-                      console.log("New account:", newAccount)
+                      if (uploadMode === "single") {
+                        // Handle single account creation
+                        console.log("New account:", newAccount)
+                        // Reset single account form
+                        setNewAccount({
+                          name: "",
+                          phoneNumbers: [""],
+                          balance: "",
+                          dueDate: "",
+                          status: "untouched",
+                          assignedTo: "",
+                          bankPartner: "",
+                          remarks: ""
+                        })
+                      } else {
+                        // Handle bulk upload
+                        console.log("Bulk upload:", { file: uploadedFile, assignment: bulkAssignment })
+                        // Reset bulk form
+                        setUploadedFile(null)
+                        setBulkAssignment({
+                          assignedTo: "",
+                          department: "",
+                          manager: "",
+                          status: "untouched"
+                        })
+                      }
                       setIsAddDialogOpen(false)
-                      // Reset form
-                      setNewAccount({
-                        name: "",
-                        phoneNumbers: [""],
-                        balance: "",
-                        dueDate: "",
-                        status: "untouched",
-                        assignedTo: "",
-                        bankPartner: "",
-                        remarks: ""
-                      })
+                      setUploadMode("single")
                     }}
                   >
-                    Create Account
+                    {uploadMode === "single" ? "Create Account" : "Upload Accounts"}
                   </Button>
                 </div>
               </DialogContent>
