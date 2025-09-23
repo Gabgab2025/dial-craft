@@ -192,7 +192,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
       </SidebarContent>
 
       {/* Bottom Section */}
-      <SidebarFooter className="p-4 border-t border-sidebar-border">
+      <SidebarFooter className="p-4">
         <SidebarMenu className="space-y-1">
           {/* Documentation */}
           <SidebarMenuItem>
