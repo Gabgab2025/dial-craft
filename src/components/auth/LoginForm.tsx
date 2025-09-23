@@ -69,13 +69,10 @@ export function LoginForm({ onLogin }: LoginFormProps) {
           <img 
             src={jdgkLogo} 
             alt="JDGK Business Solutions" 
-            className="h-16 w-auto object-contain mx-auto"
+            className="h-24 w-auto object-contain mx-auto"
           />
         </div>
         <div>
-          <CardTitle className="text-2xl font-poppins font-bold text-foreground">
-            SecureCall CRM
-          </CardTitle>
           <CardDescription className="text-muted-foreground mt-2">
             Bank Collections Management System
           </CardDescription>
