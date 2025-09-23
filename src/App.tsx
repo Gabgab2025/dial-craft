@@ -17,6 +17,7 @@ import UploadData from "./pages/UploadData";
 import Reports from "./pages/Reports";
 import UserManagement from "./pages/UserManagement";
 import Settings from "./pages/Settings";
+import Documentation from "./pages/Documentation";
 import ThreeCXStatus from "./pages/integrations/ThreeCXStatus";
 import DatabaseIntegration from "./pages/integrations/Database";
 import NotFound from "./pages/NotFound";
@@ -69,6 +70,7 @@ const App = () => {
                   <Route path="/reports" element={<Reports />} />
                   <Route path="/users" element={<UserManagement />} />
                   <Route path="/settings" element={<Settings />} />
+                  <Route path="/documentation" element={<Documentation />} />
                   <Route path="/integrations/3cx" element={<ThreeCXStatus />} />
                   <Route path="/integrations/database" element={<DatabaseIntegration />} />
                   <Route path="*" element={<NotFound />} />

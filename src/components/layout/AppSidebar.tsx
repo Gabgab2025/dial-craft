@@ -9,7 +9,8 @@ import {
   Shield,
   Headphones,
   Database,
-  Upload
+  Upload,
+  BookOpen
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import {
@@ -40,6 +41,7 @@ const menuItems: MenuItem[] = [
   { title: "Reports", url: "/reports", icon: BarChart3, roles: ["admin", "manager"] },
   { title: "User Management", url: "/users", icon: Shield, roles: ["admin"] },
   { title: "System Settings", url: "/settings", icon: Settings, roles: ["admin"] },
+  { title: "Documentation", url: "/documentation", icon: BookOpen, roles: ["admin", "manager", "agent"] },
 ]
 
 const integrationItems: MenuItem[] = [
