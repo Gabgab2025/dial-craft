@@ -13,17 +13,17 @@ export default function Login({ onLogin }: LoginPageProps) {
         <div className="grid lg:grid-cols-2 min-h-[600px]">
           
           {/* Left Panel - Business Info */}
-          <div className="relative bg-gradient-to-br from-primary/20 via-primary/10 to-accent/20 p-12 flex flex-col justify-center text-center lg:text-left">
+          <div className="relative bg-gradient-to-br from-primary/80 via-primary/60 to-accent/60 p-12 flex flex-col justify-center text-center lg:text-left">
             {/* Background Pattern */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary))_0%,transparent_50%)] opacity-20" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--accent))_0%,transparent_50%)] opacity-15" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary))_0%,transparent_50%)] opacity-40" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--accent))_0%,transparent_50%)] opacity-30" />
             
             {/* Logo */}
             <div className="relative z-10 mb-8">
               <img 
                 src={jdgkLogo} 
                 alt="JDGK Business Solutions Inc." 
-                className="w-32 h-auto mx-auto lg:mx-0 mb-6"
+                className="w-48 h-auto mx-auto lg:mx-0 mb-6"
               />
             </div>
             
@@ -52,7 +52,7 @@ export default function Login({ onLogin }: LoginPageProps) {
           </div>
           
           {/* Right Panel - Login Form */}
-          <div className="bg-primary/5 p-12 flex flex-col justify-center">
+          <div className="bg-card p-12 flex flex-col justify-center">
             <div className="max-w-sm mx-auto w-full">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-foreground mb-2">WELCOME BACK!</h2>
