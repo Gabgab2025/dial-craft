@@ -10,7 +10,9 @@ import {
   Headphones,
   Database,
   Upload,
-  BookOpen
+  BookOpen,
+  User,
+  LogOut
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import {
@@ -22,8 +24,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 
 interface MenuItem {
   title: string
@@ -41,7 +46,6 @@ const menuItems: MenuItem[] = [
   { title: "Reports", url: "/reports", icon: BarChart3, roles: ["admin", "manager"] },
   { title: "User Management", url: "/users", icon: Shield, roles: ["admin"] },
   { title: "System Settings", url: "/settings", icon: Settings, roles: ["admin"] },
-  { title: "Documentation", url: "/documentation", icon: BookOpen, roles: ["admin", "manager", "agent"] },
 ]
 
 const integrationItems: MenuItem[] = [
@@ -51,9 +55,11 @@ const integrationItems: MenuItem[] = [
 
 interface AppSidebarProps {
   userRole?: string
+  userEmail?: string
+  onLogout?: () => void
 }
 
-export function AppSidebar({ userRole = "agent" }: AppSidebarProps) {
+export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", onLogout }: AppSidebarProps) {
   const { state } = useSidebar()
   const location = useLocation()
   const currentPath = location.pathname
@@ -67,6 +73,17 @@ export function AppSidebar({ userRole = "agent" }: AppSidebarProps) {
   const filteredMenuItems = menuItems.filter(item => item.roles.includes(userRole))
   const filteredIntegrationItems = integrationItems.filter(item => item.roles.includes(userRole))
   const collapsed = state === "collapsed"
+
+  const userInitials = userEmail.split('@')[0].slice(0, 2).toUpperCase()
+
+  const getRoleColor = (role: string) => {
+    switch (role) {
+      case "admin": return "text-destructive"
+      case "manager": return "text-warning"  
+      case "agent": return "text-success"
+      default: return "text-muted-foreground"
+    }
+  }
 
   return (
     <Sidebar
@@ -134,6 +151,73 @@ export function AppSidebar({ userRole = "agent" }: AppSidebarProps) {
           </SidebarGroup>
         )}
       </SidebarContent>
+
+      {/* Bottom Section */}
+      <SidebarFooter className="p-4 border-t border-sidebar-border">
+        <SidebarMenu className="space-y-1">
+          {/* Documentation */}
+          <SidebarMenuItem>
+            <SidebarMenuButton 
+              asChild 
+              className={`${getNavCls({ isActive: isActive("/documentation") })} transition-all duration-200`}
+            >
+              <NavLink to="/documentation" end className="flex items-center space-x-3 px-4 py-2.5 rounded-lg">
+                <BookOpen className="w-5 h-5 flex-shrink-0" />
+                {!collapsed && (
+                  <span className="font-medium text-sm">Documentation</span>
+                )}
+              </NavLink>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          {/* User Profile Section */}
+          {!collapsed && (
+            <SidebarMenuItem>
+              <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg bg-sidebar-accent/20">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src="" alt={userEmail} />
+                  <AvatarFallback className="bg-gradient-accent text-accent-foreground font-semibold text-xs">
+                    {userInitials}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col flex-1 min-w-0">
+                  <span className="text-sm font-medium text-sidebar-foreground truncate">{userEmail}</span>
+                  <Badge variant="outline" className={`text-xs h-4 w-fit ${getRoleColor(userRole)}`}>
+                    {userRole.charAt(0).toUpperCase() + userRole.slice(1)}
+                  </Badge>
+                </div>
+              </div>
+            </SidebarMenuItem>
+          )}
+
+          {/* Profile */}
+          <SidebarMenuItem>
+            <SidebarMenuButton className="text-sidebar-foreground/80 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground transition-all duration-200">
+              <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg w-full">
+                <User className="w-5 h-5 flex-shrink-0" />
+                {!collapsed && (
+                  <span className="font-medium text-sm">Profile</span>
+                )}
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          {/* Logout */}
+          <SidebarMenuItem>
+            <SidebarMenuButton 
+              className="text-destructive hover:bg-destructive/10 hover:text-destructive transition-all duration-200"
+              onClick={onLogout}
+            >
+              <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg w-full">
+                <LogOut className="w-5 h-5 flex-shrink-0" />
+                {!collapsed && (
+                  <span className="font-medium text-sm">Logout</span>
+                )}
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }
