@@ -170,26 +170,6 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
             </SidebarMenuButton>
           </SidebarMenuItem>
 
-          {/* User Profile Section */}
-          {!collapsed && (
-            <SidebarMenuItem>
-              <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg bg-sidebar-accent/20">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="" alt={userEmail} />
-                  <AvatarFallback className="bg-gradient-accent text-accent-foreground font-semibold text-xs">
-                    {userInitials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col flex-1 min-w-0">
-                  <span className="text-sm font-medium text-sidebar-foreground truncate">{userEmail}</span>
-                  <Badge variant="outline" className={`text-xs h-4 w-fit ${getRoleColor(userRole)}`}>
-                    {userRole.charAt(0).toUpperCase() + userRole.slice(1)}
-                  </Badge>
-                </div>
-              </div>
-            </SidebarMenuItem>
-          )}
-
           {/* Profile */}
           <SidebarMenuItem>
             <SidebarMenuButton className="text-sidebar-foreground/80 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground transition-all duration-200">
