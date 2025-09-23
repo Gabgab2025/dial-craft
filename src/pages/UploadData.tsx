@@ -84,6 +84,7 @@ export default function UploadData() {
   const [uploadHistory, setUploadHistory] = useState(mockUploads)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -100,16 +101,24 @@ export default function UploadData() {
     setIsDragOver(false)
     
     const files = Array.from(e.dataTransfer.files)
-    handleFileUpload(files)
+    setSelectedFiles(files)
   }, [])
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
-    handleFileUpload(files)
+    setSelectedFiles(files)
   }
 
-  const handleFileUpload = async (files: File[]) => {
-    if (files.length === 0) return
+  const removeFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const clearFiles = () => {
+    setSelectedFiles([])
+  }
+
+  const handleFileUpload = async () => {
+    if (selectedFiles.length === 0) return
 
     setIsUploading(true)
     setUploadProgress(0)
@@ -133,7 +142,7 @@ export default function UploadData() {
       // Add to history
       const newUpload: UploadHistory = {
         id: `UP-${Date.now()}`,
-        filename: files[0].name,
+        filename: selectedFiles[0].name,
         uploadDate: new Date().toLocaleString(),
         status: "success",
         totalRows: Math.floor(Math.random() * 1000) + 100,
@@ -148,8 +157,17 @@ export default function UploadData() {
       setTimeout(() => {
         setIsUploading(false)
         setUploadProgress(0)
+        setSelectedFiles([])
       }, 1000)
     }, 3000)
+  }
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes'
+    const k = 1024
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
   const stats = {
@@ -287,6 +305,63 @@ export default function UploadData() {
                       <span className="font-mono">{Math.round(uploadProgress)}%</span>
                     </div>
                     <Progress value={uploadProgress} className="h-2" />
+                  </div>
+                </div>
+              ) : selectedFiles.length > 0 ? (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-foreground">
+                      Selected Files ({selectedFiles.length})
+                    </h3>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={clearFiles}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      <X className="w-4 h-4 mr-1" />
+                      Clear All
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-2 max-h-60 overflow-y-auto">
+                    {selectedFiles.map((file, index) => (
+                      <div 
+                        key={index}
+                        className="flex items-center justify-between p-3 glass-light rounded-lg border border-glass-border"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <FileSpreadsheet className="w-5 h-5 text-accent flex-shrink-0" />
+                          <div>
+                            <div className="font-medium text-foreground text-sm">{file.name}</div>
+                            <div className="text-xs text-muted-foreground">
+                              {formatFileSize(file.size)} • {file.type || 'Unknown type'}
+                            </div>
+                          </div>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => removeFile(index)}
+                          className="text-muted-foreground hover:text-destructive"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex items-center justify-between pt-4 border-t border-glass-border">
+                    <div className="text-xs text-muted-foreground">
+                      Required columns: Account ID, Name, Phone Numbers, Balance, Due Date, Bank Partner
+                    </div>
+                    <Button 
+                      onClick={handleFileUpload}
+                      className="bg-gradient-accent hover:shadow-accent"
+                    >
+                      <Upload className="w-4 h-4 mr-2" />
+                      Upload Files
+                    </Button>
                   </div>
                 </div>
               ) : (
