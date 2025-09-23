@@ -453,7 +453,7 @@ export default function Dispositions() {
 
       {/* Edit Disposition Dialog */}
       <Dialog open={!!editingDisposition} onOpenChange={() => cancelEdit()}>
-        <DialogContent className="glass-card border-glass-border max-w-md">
+        <DialogContent className="glass-card border-glass-border max-w-md z-50 pointer-events-auto">
           <DialogHeader>
             <DialogTitle className="text-foreground">Edit Disposition</DialogTitle>
             <DialogDescription className="text-muted-foreground">
@@ -501,7 +501,7 @@ export default function Dispositions() {
                   <SelectTrigger className="glass-light border-glass-border focus:ring-accent focus:border-accent">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="glass-card border-glass-border">
+                  <SelectContent className="glass-card border-glass-border bg-background z-50">
                     <SelectItem value="contact">Contact Made</SelectItem>
                     <SelectItem value="no_contact">No Contact</SelectItem>
                     <SelectItem value="outcome">Positive Outcome</SelectItem>
@@ -520,7 +520,7 @@ export default function Dispositions() {
                   <SelectTrigger className="glass-light border-glass-border focus:ring-accent focus:border-accent">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="glass-card border-glass-border">
+                  <SelectContent className="glass-card border-glass-border bg-background z-50">
                     <SelectItem value="success">Success (Green)</SelectItem>
                     <SelectItem value="warning">Warning (Yellow)</SelectItem>
                     <SelectItem value="destructive">Destructive (Red)</SelectItem>
