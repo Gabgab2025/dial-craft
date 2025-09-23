@@ -189,57 +189,59 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
             </SidebarGroupContent>
           </SidebarGroup>
         )}
+
+        {/* Additional Menu Items */}
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1 mt-6">
+              {/* Documentation */}
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  asChild 
+                  className={`${getNavCls({ isActive: isActive("/documentation") })} transition-colors duration-150`}
+                >
+                  <NavLink to="/documentation" end className="flex items-center space-x-3 px-4 py-2.5 rounded-lg">
+                    <BookOpen className="w-5 h-5 flex-shrink-0" />
+                    {!collapsed && (
+                      <span className="font-medium text-sm">Documentation</span>
+                    )}
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* Profile */}
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  className="text-sidebar-foreground/80 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground transition-colors duration-150"
+                  onClick={() => setShowProfile(true)}
+                >
+                  <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg w-full">
+                    <User className="w-5 h-5 flex-shrink-0" />
+                    {!collapsed && (
+                      <span className="font-medium text-sm">Profile</span>
+                    )}
+                  </div>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* Logout */}
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  className="text-destructive hover:bg-destructive/10 hover:text-destructive transition-colors duration-150"
+                  onClick={onLogout}
+                >
+                  <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg w-full">
+                    <LogOut className="w-5 h-5 flex-shrink-0" />
+                    {!collapsed && (
+                      <span className="font-medium text-sm">Logout</span>
+                    )}
+                  </div>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
-
-      {/* Bottom Section */}
-      <SidebarFooter className="p-4">
-        <SidebarMenu className="space-y-1">
-          {/* Documentation */}
-          <SidebarMenuItem>
-            <SidebarMenuButton 
-              asChild 
-              className={`${getNavCls({ isActive: isActive("/documentation") })} transition-colors duration-150`}
-            >
-              <NavLink to="/documentation" end className="flex items-center space-x-3 px-4 py-2.5 rounded-lg">
-                <BookOpen className="w-5 h-5 flex-shrink-0" />
-                {!collapsed && (
-                  <span className="font-medium text-sm">Documentation</span>
-                )}
-              </NavLink>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-
-          {/* Profile */}
-          <SidebarMenuItem>
-            <SidebarMenuButton 
-              className="text-sidebar-foreground/80 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground transition-colors duration-150"
-              onClick={() => setShowProfile(true)}
-            >
-              <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg w-full">
-                <User className="w-5 h-5 flex-shrink-0" />
-                {!collapsed && (
-                  <span className="font-medium text-sm">Profile</span>
-                )}
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-
-          {/* Logout */}
-          <SidebarMenuItem>
-            <SidebarMenuButton 
-              className="text-destructive hover:bg-destructive/10 hover:text-destructive transition-colors duration-150"
-              onClick={onLogout}
-            >
-              <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg w-full">
-                <LogOut className="w-5 h-5 flex-shrink-0" />
-                {!collapsed && (
-                  <span className="font-medium text-sm">Logout</span>
-                )}
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
 
       {/* User Profile Dialog */}
       <Dialog open={showProfile} onOpenChange={setShowProfile}>
