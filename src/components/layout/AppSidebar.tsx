@@ -39,6 +39,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import jdgkLogo from "@/assets/jdgk-logo.png"
 
 interface MenuItem {
   title: string
@@ -120,6 +121,25 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
       collapsible="icon"
     >
       <SidebarContent className="bg-transparent">
+        {/* Logo Section */}
+        <div className="p-4 border-b border-sidebar-border">
+          <div className="flex items-center justify-center">
+            {collapsed ? (
+              <img 
+                src={jdgkLogo} 
+                alt="JDGK Business Solutions" 
+                className="h-8 w-auto object-contain"
+              />
+            ) : (
+              <img 
+                src={jdgkLogo} 
+                alt="JDGK Business Solutions" 
+                className="h-12 w-auto object-contain"
+              />
+            )}
+          </div>
+        </div>
+
         {/* Main Navigation */}
         <SidebarGroup>
           <SidebarGroupLabel className="text-sidebar-foreground/60 font-poppins font-semibold px-4 mb-2">

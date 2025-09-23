@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Eye, EyeOff, Shield, Phone, Lock } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import jdgkLogo from "@/assets/jdgk-logo.png"
 
 interface LoginFormProps {
   onLogin: (email: string, password: string, role: string) => void
@@ -64,15 +65,19 @@ export function LoginForm({ onLogin }: LoginFormProps) {
   return (
     <Card className="glass-card border-glass-border w-full max-w-md animate-fade-in">
       <CardHeader className="space-y-4 text-center">
-        <div className="mx-auto w-16 h-16 bg-gradient-accent rounded-full flex items-center justify-center shadow-accent">
-          <Shield className="w-8 h-8 text-accent-foreground" />
+        <div className="mx-auto mb-4">
+          <img 
+            src={jdgkLogo} 
+            alt="JDGK Business Solutions" 
+            className="h-16 w-auto object-contain mx-auto"
+          />
         </div>
         <div>
           <CardTitle className="text-2xl font-poppins font-bold text-foreground">
-            SecureCall CRM
+            JDGK Business Solutions
           </CardTitle>
           <CardDescription className="text-muted-foreground mt-2">
-            Bank Collections Management System
+            Business Management System
           </CardDescription>
         </div>
       </CardHeader>
