@@ -23,7 +23,7 @@ export default function Login({ onLogin }: LoginPageProps) {
               <img 
                 src={jdgkLogo} 
                 alt="JDGK Business Solutions Inc. Logo" 
-                className="w-32 h-auto mx-auto lg:mx-0 mb-6"
+                className="w-56 h-auto mx-auto lg:mx-0 mb-6"
               />
             </div>
             
