@@ -30,11 +30,11 @@ export default function Login({ onLogin }: LoginPageProps) {
             {/* Main Content */}
             <div className="relative z-10 space-y-6">
               <h1 className="text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-                YOUR NEXT
+                JDGK BUSINESS
                 <br />
-                <span className="text-primary">BUSINESS SOLUTION</span>
+                <span className="text-primary">SOLUTIONS INC.</span>
                 <br />
-                AWAITS!
+                RESULTS DRIVEN, CLIENT FOCUSED
               </h1>
               
               <p className="text-muted-foreground text-lg max-w-md mx-auto lg:mx-0">
