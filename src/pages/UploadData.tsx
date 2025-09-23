@@ -183,6 +183,12 @@ export default function UploadData() {
               <FileText className="w-4 h-4 mr-2" />
               Guide
             </Button>
+            <label htmlFor="file-upload">
+              <Button className="bg-gradient-accent hover:shadow-accent cursor-pointer">
+                <Upload className="w-4 h-4 mr-2" />
+                Choose Files
+              </Button>
+            </label>
           </div>
         </div>
       </div>
@@ -310,12 +316,6 @@ export default function UploadData() {
                     className="hidden"
                     id="file-upload"
                   />
-                  <label htmlFor="file-upload">
-                    <Button className="bg-gradient-accent hover:shadow-accent cursor-pointer">
-                      <Upload className="w-4 h-4 mr-2" />
-                      Choose Files
-                    </Button>
-                  </label>
                   
                   <div className="mt-4 text-xs text-muted-foreground">
                     Required columns: Account ID, Name, Phone Numbers, Balance, Due Date, Bank Partner
