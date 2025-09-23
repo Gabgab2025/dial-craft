@@ -39,7 +39,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import jdgkLogo from "@/assets/jdgk-logo.png"
+import jdgkLogo from "@/assets/jdgk-logo-new.png"
 
 interface MenuItem {
   title: string

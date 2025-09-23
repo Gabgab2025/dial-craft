@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Eye, EyeOff, Shield, Phone, Lock } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import jdgkLogo from "@/assets/jdgk-logo.png"
+import jdgkLogo from "@/assets/jdgk-logo-new.png"
 
 interface LoginFormProps {
   onLogin: (email: string, password: string, role: string) => void
