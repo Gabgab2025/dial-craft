@@ -6,7 +6,7 @@ interface LoginPageProps {
 
 export default function Login({ onLogin }: LoginPageProps) {
   return (
-    <div className="min-h-screen bg-gradient-glass flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-glass flex items-center justify-center p-4 dark">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--accent))_0%,transparent_50%)] opacity-10" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,hsl(var(--primary))_0%,transparent_50%)] opacity-5" />

@@ -64,7 +64,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
 
   return (
     <Card className="glass-card border-glass-border w-full max-w-md animate-fade-in">
-      <CardHeader className="space-y-4 text-center bg-black">
+      <CardHeader className="space-y-4 text-center">
         <div className="mx-auto mb-4">
           <img 
             src={jdgkLogo} 
