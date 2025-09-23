@@ -133,9 +133,9 @@ export default function Accounts() {
   const [uploadMode, setUploadMode] = useState<"single" | "bulk">("single")
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
   const [bulkAssignment, setBulkAssignment] = useState({
-    assignedTo: "",
-    department: "",
-    manager: "",
+    assignedTo: "none",
+    department: "none",
+    manager: "none",
     status: "untouched" as Account["status"]
   })
   const [newAccount, setNewAccount] = useState({
@@ -409,7 +409,7 @@ export default function Accounts() {
                               <SelectValue placeholder="Select agent (optional)" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="">None</SelectItem>
+                              <SelectItem value="none">None</SelectItem>
                               <SelectItem value="Agent A">Agent A</SelectItem>
                               <SelectItem value="Agent B">Agent B</SelectItem>
                               <SelectItem value="Agent C">Agent C</SelectItem>
@@ -431,7 +431,7 @@ export default function Accounts() {
                               <SelectValue placeholder="Select department (optional)" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="">None</SelectItem>
+                              <SelectItem value="none">None</SelectItem>
                               <SelectItem value="Collections">Collections</SelectItem>
                               <SelectItem value="Customer Service">Customer Service</SelectItem>
                               <SelectItem value="Recovery">Recovery</SelectItem>
@@ -450,7 +450,7 @@ export default function Accounts() {
                               <SelectValue placeholder="Select manager (optional)" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="">None</SelectItem>
+                              <SelectItem value="none">None</SelectItem>
                               <SelectItem value="Manager A">Manager A</SelectItem>
                               <SelectItem value="Manager B">Manager B</SelectItem>
                               <SelectItem value="Manager C">Manager C</SelectItem>
@@ -512,9 +512,9 @@ export default function Accounts() {
                         // Reset bulk form
                         setUploadedFile(null)
                         setBulkAssignment({
-                          assignedTo: "",
-                          department: "",
-                          manager: "",
+                          assignedTo: "none",
+                          department: "none",
+                          manager: "none",
                           status: "untouched"
                         })
                       }
