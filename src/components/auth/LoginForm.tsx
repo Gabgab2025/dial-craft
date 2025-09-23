@@ -128,7 +128,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
           
           <Button
             type="submit"
-            className="w-full bg-black hover:bg-black/80 text-white font-medium"
+            className="w-full bg-gradient-primary hover:shadow-accent transition-all duration-300 font-medium"
             disabled={isLoading}
           >
             {isLoading ? (
