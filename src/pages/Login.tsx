@@ -1,5 +1,5 @@
 import { LoginForm } from "@/components/auth/LoginForm"
-import jdgkBrochure from "@/assets/jdgk-brochure.png"
+import jdgkLogo from "@/assets/jdgk-logo-new.png"
 
 interface LoginPageProps {
   onLogin: (email: string, password: string, role: string) => void
@@ -21,7 +21,7 @@ export default function Login({ onLogin }: LoginPageProps) {
             {/* Logo */}
             <div className="relative z-10 mb-8">
               <img 
-                src={jdgkBrochure} 
+                src={jdgkLogo} 
                 alt="JDGK Business Solutions Inc." 
                 className="w-32 h-auto mx-auto lg:mx-0 mb-6"
               />
