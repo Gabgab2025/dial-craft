@@ -79,7 +79,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive 
       ? "bg-sidebar-accent/50 text-sidebar-foreground font-medium border-l-2 border-sidebar-primary" 
-      : "text-sidebar-foreground/80 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground"
+      : "text-sidebar-foreground/80 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground transition-colors duration-150"
 
   const filteredMenuItems = menuItems.filter(item => item.roles.includes(userRole))
   const filteredIntegrationItems = integrationItems.filter(item => item.roles.includes(userRole))
@@ -116,7 +116,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
 
   return (
     <Sidebar
-      className="h-full border-r border-sidebar-border glass transition-all duration-300"
+      className="h-full border-r border-sidebar-border glass"
       collapsible="icon"
     >
       <SidebarContent className="bg-transparent">
@@ -133,7 +133,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton 
                       asChild 
-                      className={`${getNavCls({ isActive: isItemActive })} transition-all duration-200`}
+                      className={`${getNavCls({ isActive: isItemActive })} transition-colors duration-150`}
                     >
                       <NavLink to={item.url} end className="flex items-center space-x-3 px-4 py-2.5 rounded-lg">
                         <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -163,7 +163,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton 
                         asChild 
-                        className={`${getNavCls({ isActive: isItemActive })} transition-all duration-200`}
+                        className={`${getNavCls({ isActive: isItemActive })} transition-colors duration-150`}
                       >
                         <NavLink to={item.url} end className="flex items-center space-x-3 px-4 py-2.5 rounded-lg">
                           <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -188,7 +188,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
           <SidebarMenuItem>
             <SidebarMenuButton 
               asChild 
-              className={`${getNavCls({ isActive: isActive("/documentation") })} transition-all duration-200`}
+              className={`${getNavCls({ isActive: isActive("/documentation") })} transition-colors duration-150`}
             >
               <NavLink to="/documentation" end className="flex items-center space-x-3 px-4 py-2.5 rounded-lg">
                 <BookOpen className="w-5 h-5 flex-shrink-0" />
@@ -202,7 +202,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
           {/* Profile */}
           <SidebarMenuItem>
             <SidebarMenuButton 
-              className="text-sidebar-foreground/80 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground transition-all duration-200"
+              className="text-sidebar-foreground/80 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground transition-colors duration-150"
               onClick={() => setShowProfile(true)}
             >
               <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg w-full">
@@ -217,7 +217,7 @@ export function AppSidebar({ userRole = "agent", userEmail = "agent@bank.com", o
           {/* Logout */}
           <SidebarMenuItem>
             <SidebarMenuButton 
-              className="text-destructive hover:bg-destructive/10 hover:text-destructive transition-all duration-200"
+              className="text-destructive hover:bg-destructive/10 hover:text-destructive transition-colors duration-150"
               onClick={onLogout}
             >
               <div className="flex items-center space-x-3 px-4 py-2.5 rounded-lg w-full">
