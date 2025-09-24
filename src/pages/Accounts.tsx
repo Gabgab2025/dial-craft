@@ -184,10 +184,17 @@ export default function Accounts() {
   // Bank partners list
   const bankPartners = [
     { value: "all", label: "All Banks" },
-    { value: "Chase Bank", label: "Chase Bank" },
-    { value: "Wells Fargo", label: "Wells Fargo" },
-    { value: "Bank of America", label: "Bank of America" },
-    { value: "Citibank", label: "Citibank" }
+    { value: "Rcbc", label: "RCBC" },
+    { value: "Fundline", label: "Fundline" },
+    { value: "Amg", label: "AMG" },
+    { value: "Simbayanan", label: "Simbayanan" },
+    { value: "Flexi", label: "Flexi" },
+    { value: "Tfs", label: "TFS" },
+    { value: "JACCS", label: "JACCS" },
+    { value: "Radiowealth", label: "Radiowealth" },
+    { value: "Ctbc", label: "CTBC" },
+    { value: "Ewb", label: "EWB" },
+    { value: "Bdo", label: "BDO" }
   ]
 
   // Initialize bank filter from URL params

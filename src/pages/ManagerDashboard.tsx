@@ -104,10 +104,17 @@ export default function ManagerDashboard() {
   // Bank partners list
   const bankPartners = [
     { value: "all", label: "All Banks" },
-    { value: "chase", label: "Chase Bank" },
-    { value: "wells", label: "Wells Fargo" },
-    { value: "boa", label: "Bank of America" },
-    { value: "citi", label: "Citibank" }
+    { value: "Rcbc", label: "RCBC" },
+    { value: "Fundline", label: "Fundline" },
+    { value: "Amg", label: "AMG" },
+    { value: "Simbayanan", label: "Simbayanan" },
+    { value: "Flexi", label: "Flexi" },
+    { value: "Tfs", label: "TFS" },
+    { value: "JACCS", label: "JACCS" },
+    { value: "Radiowealth", label: "Radiowealth" },
+    { value: "Ctbc", label: "CTBC" },
+    { value: "Ewb", label: "EWB" },
+    { value: "Bdo", label: "BDO" }
   ]
   
   // Handle navigation to Accounts with bank filter
