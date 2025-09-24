@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -19,7 +20,8 @@ import {
   Eye,
   ArrowUp,
   ArrowDown,
-  User
+  User,
+  Building2
 } from "lucide-react"
 
 interface ManagerKPICardProps {
@@ -89,13 +91,30 @@ function ManagerKPICard({ title, value, change, changeType, icon, description }:
 }
 
 export default function ManagerDashboard() {
+  const navigate = useNavigate()
   const [currentTime, setCurrentTime] = useState(new Date())
   const [selectedMetric, setSelectedMetric] = useState<string>("batch")
+  const [selectedBank, setSelectedBank] = useState<string>("all")
   
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
     return () => clearInterval(timer)
   }, [])
+  
+  // Bank partners list
+  const bankPartners = [
+    { value: "all", label: "All Banks" },
+    { value: "chase", label: "Chase Bank" },
+    { value: "wells", label: "Wells Fargo" },
+    { value: "boa", label: "Bank of America" },
+    { value: "citi", label: "Citibank" }
+  ]
+  
+  // Handle navigation to Accounts with bank filter
+  const handleViewAccounts = () => {
+    const params = selectedBank !== "all" ? `?bank=${selectedBank}` : ""
+    navigate(`/accounts${params}`)
+  }
   
   // Mock data - Manager specific KPIs per PRD
   const batchMetrics = [
@@ -216,6 +235,26 @@ export default function ManagerDashboard() {
               <CheckCircle className="w-3 h-3 mr-1" />
               All Systems Online
             </Badge>
+            
+            {/* Bank Filter */}
+            <Select value={selectedBank} onValueChange={setSelectedBank}>
+              <SelectTrigger className="w-full sm:w-48 bg-glass-light/50 backdrop-blur-sm border-glass-border hover:bg-glass-light/70 transition-colors">
+                <SelectValue placeholder="Select Bank" />
+                <ChevronDown className="h-4 w-4 opacity-50" />
+              </SelectTrigger>
+              <SelectContent className="bg-glass-medium/95 backdrop-blur-md border-glass-border z-50">
+                {bankPartners.map((bank) => (
+                  <SelectItem key={bank.value} value={bank.value} className="hover:bg-glass-light/30 focus:bg-glass-light/30">
+                    <div className="flex items-center space-x-2">
+                      <Building2 className="h-4 w-4 text-accent" />
+                      <span>{bank.label}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            {/* KPI Selector */}
             <Select value={selectedMetric} onValueChange={setSelectedMetric}>
               <SelectTrigger className="w-full sm:w-48 bg-glass-light/50 backdrop-blur-sm border-glass-border hover:bg-glass-light/70 transition-colors">
                 <SelectValue placeholder="Select KPIs" />
@@ -260,9 +299,14 @@ export default function ManagerDashboard() {
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-medium text-muted-foreground">Revenue</CardTitle>
-              <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-accent hover:bg-glass-light/20 text-xs"
+                onClick={handleViewAccounts}
+              >
                 <Eye className="h-3 w-3 mr-1" />
-                <span className="hidden sm:inline">View Report</span>
+                <span className="hidden sm:inline">View Accounts</span>
                 <span className="sm:hidden">View</span>
               </Button>
             </div>
@@ -299,9 +343,14 @@ export default function ManagerDashboard() {
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-medium text-muted-foreground">Call Time</CardTitle>
-              <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-accent hover:bg-glass-light/20 text-xs"
+                onClick={handleViewAccounts}
+              >
                 <Eye className="h-3 w-3 mr-1" />
-                <span className="hidden sm:inline">View Report</span>
+                <span className="hidden sm:inline">View Accounts</span>
                 <span className="sm:hidden">View</span>
               </Button>
             </div>
@@ -354,9 +403,14 @@ export default function ManagerDashboard() {
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-medium text-muted-foreground">Collections</CardTitle>
-              <Button variant="ghost" size="sm" className="text-accent hover:bg-glass-light/20 text-xs">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-accent hover:bg-glass-light/20 text-xs"
+                onClick={handleViewAccounts}
+              >
                 <Eye className="h-3 w-3 mr-1" />
-                <span className="hidden sm:inline">View Report</span>
+                <span className="hidden sm:inline">View Accounts</span>
                 <span className="sm:hidden">View</span>
               </Button>
             </div>

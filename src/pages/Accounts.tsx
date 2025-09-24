@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams } from "react-router-dom"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -161,8 +162,10 @@ function formatCurrency(amount: number) {
 }
 
 export default function Accounts() {
+  const [searchParams] = useSearchParams()
   const [accounts, setAccounts] = useState(mockAccounts)
   const [searchQuery, setSearchQuery] = useState("")
+  const [selectedBank, setSelectedBank] = useState("all")
   const [filteredAccounts, setFilteredAccounts] = useState(mockAccounts)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [uploadMode, setUploadMode] = useState<"single" | "bulk">("single")
@@ -178,15 +181,50 @@ export default function Accounts() {
     remarks: ""
   })
 
+  // Bank partners list
+  const bankPartners = [
+    { value: "all", label: "All Banks" },
+    { value: "Chase Bank", label: "Chase Bank" },
+    { value: "Wells Fargo", label: "Wells Fargo" },
+    { value: "Bank of America", label: "Bank of America" },
+    { value: "Citibank", label: "Citibank" }
+  ]
+
+  // Initialize bank filter from URL params
+  useEffect(() => {
+    const bankParam = searchParams.get('bank')
+    if (bankParam) {
+      const bank = bankPartners.find(b => b.value.toLowerCase() === bankParam.toLowerCase())
+      if (bank) {
+        setSelectedBank(bank.value)
+      }
+    }
+  }, [searchParams])
+
+  // Filter accounts by search query and selected bank
+  useEffect(() => {
+    let filtered = accounts
+
+    // Apply bank filter
+    if (selectedBank !== "all") {
+      filtered = filtered.filter(account => account.bankPartner === selectedBank)
+    }
+
+    // Apply search filter
+    if (searchQuery) {
+      filtered = filtered.filter(account =>
+        account.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        account.accountId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        account.phoneNumbers.some(phone => phone.includes(searchQuery)) ||
+        account.bankPartner.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    }
+
+    setFilteredAccounts(filtered)
+  }, [accounts, searchQuery, selectedBank])
+
   const handleSearch = (query: string) => {
     setSearchQuery(query)
-    const filtered = accounts.filter(account =>
-      account.name.toLowerCase().includes(query.toLowerCase()) ||
-      account.accountId.toLowerCase().includes(query.toLowerCase()) ||
-      account.phoneNumbers.some(phone => phone.includes(query)) ||
-      account.bankPartner.toLowerCase().includes(query.toLowerCase())
-    )
-    setFilteredAccounts(filtered)
   }
 
   return (
@@ -337,12 +375,28 @@ export default function Accounts() {
           </div>
         </div>
 
-        <Input
-          placeholder="Search accounts..."
-          value={searchQuery}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="glass-light border-glass-border focus:ring-accent focus:border-accent max-w-md"
-        />
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Input
+            placeholder="Search accounts..."
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="glass-light border-glass-border focus:ring-accent focus:border-accent max-w-md"
+          />
+          
+          {/* Bank Filter */}
+          <Select value={selectedBank} onValueChange={setSelectedBank}>
+            <SelectTrigger className="w-full sm:w-48 glass-light border-glass-border">
+              <SelectValue placeholder="Filter by Bank" />
+            </SelectTrigger>
+            <SelectContent className="bg-glass-medium/95 backdrop-blur-md border-glass-border z-50">
+              {bankPartners.map((bank) => (
+                <SelectItem key={bank.value} value={bank.value} className="hover:bg-glass-light/30 focus:bg-glass-light/30">
+                  {bank.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Stats Cards */}
