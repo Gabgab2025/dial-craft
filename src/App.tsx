@@ -16,6 +16,8 @@ import Dispositions from "./pages/Dispositions";
 import UploadData from "./pages/UploadData";
 import Reports from "./pages/Reports";
 import UserManagement from "./pages/UserManagement";
+import RoleManagement from "./pages/RoleManagement";
+import AuditLogs from "./pages/AuditLogs";
 import Settings from "./pages/Settings";
 import Documentation from "./pages/Documentation";
 import ThreeCXStatus from "./pages/integrations/ThreeCXStatus";
@@ -69,6 +71,8 @@ const App = () => {
                   <Route path="/upload" element={<UploadData />} />
                   <Route path="/reports" element={<Reports />} />
                   <Route path="/users" element={<UserManagement />} />
+                  <Route path="/role-management" element={<RoleManagement />} />
+                  <Route path="/audit-logs" element={<AuditLogs />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/documentation" element={<Documentation />} />
                   <Route path="/integrations/3cx" element={<ThreeCXStatus />} />

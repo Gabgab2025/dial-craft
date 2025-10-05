@@ -56,6 +56,8 @@ const menuItems: MenuItem[] = [
   { title: "Upload Data", url: "/upload", icon: Upload, roles: ["admin", "manager"] },
   { title: "Reports", url: "/reports", icon: BarChart3, roles: ["admin", "manager"] },
   { title: "User Management", url: "/users", icon: Shield, roles: ["admin"] },
+  { title: "Role Management", url: "/role-management", icon: Shield, roles: ["admin"] },
+  { title: "Audit Logs", url: "/audit-logs", icon: FileText, roles: ["admin"] },
   { title: "System Settings", url: "/settings", icon: Settings, roles: ["admin"] },
 ]
 
