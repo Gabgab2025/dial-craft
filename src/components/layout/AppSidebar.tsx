@@ -62,7 +62,7 @@ const menuItems: MenuItem[] = [
 ]
 
 const integrationItems: MenuItem[] = [
-  { title: "3CX Status", url: "/integrations/3cx", icon: Headphones, roles: ["admin", "manager"] },
+  { title: "Vicidial Integration", url: "/integrations/3cx", icon: Headphones, roles: ["admin", "manager"] },
   { title: "Database", url: "/integrations/database", icon: Database, roles: ["admin"] },
 ]
 
