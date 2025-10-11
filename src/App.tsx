@@ -20,7 +20,7 @@ import RoleManagement from "./pages/RoleManagement";
 import AuditLogs from "./pages/AuditLogs";
 import Settings from "./pages/Settings";
 import Documentation from "./pages/Documentation";
-import ThreeCXStatus from "./pages/integrations/ThreeCXStatus";
+import VicidialIntegration from "./pages/integrations/VicidialIntegration";
 import DatabaseIntegration from "./pages/integrations/Database";
 import NotFound from "./pages/NotFound";
 
@@ -75,7 +75,7 @@ const App = () => {
                   <Route path="/audit-logs" element={<AuditLogs />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/documentation" element={<Documentation />} />
-                  <Route path="/integrations/3cx" element={<ThreeCXStatus />} />
+                  <Route path="/integrations/vicidial" element={<VicidialIntegration />} />
                   <Route path="/integrations/database" element={<DatabaseIntegration />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

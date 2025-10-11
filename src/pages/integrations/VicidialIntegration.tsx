@@ -6,43 +6,50 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
-import { Phone, CheckCircle, AlertTriangle, Settings, Save, TestTube } from "lucide-react"
+import { Phone, CheckCircle, Settings, Save, TestTube } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 
-export default function ThreeCXStatus() {
+export default function VicidialIntegration() {
   const [isConfigOpen, setIsConfigOpen] = useState(false)
   
   const form = useForm({
     defaultValues: {
-      serverUrl: "https://your-3cx-server.com",
-      apiKey: "",
-      username: "",
-      password: "",
+      serverUrl: "https://your-vicidial-server.com",
+      apiUrl: "https://your-vicidial-server.com/vicidial/api.php",
+      apiUser: "",
+      apiPassword: "",
+      dbServer: "",
+      dbPort: "3306",
+      dbName: "asterisk",
+      dbUser: "",
+      dbPassword: "",
       autoSync: true,
       callLogging: true,
-      popupOnCall: true,
-      recordCalls: false,
-      dialerMode: "preview",
+      screenPopup: true,
+      recordCalls: true,
+      dialerMode: "RATIO",
+      campaignId: "",
       notes: ""
     }
   })
 
   const onSubmit = (data: any) => {
-    console.log("3CX Configuration:", data)
+    console.log("Vicidial Configuration:", data)
     setIsConfigOpen(false)
   }
 
   const testConnection = () => {
-    console.log("Testing 3CX connection...")
+    console.log("Testing Vicidial connection...")
   }
+
   return (
     <div className="min-h-screen bg-background p-6 space-y-6 animate-fade-in">
       <div className="glass-card p-6 border-glass-border">
         <h1 className="text-3xl font-bold font-poppins text-foreground mb-2">
-          3CX Integration Status
+          Vicidial Integration
         </h1>
-        <p className="text-muted-foreground">Monitor 3CX phone system integration</p>
+        <p className="text-muted-foreground">Configure and monitor Vicidial dialer integration</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -65,6 +72,10 @@ export default function ThreeCXStatus() {
               <span>API Status</span>
               <Badge className="bg-success/10 text-success border-success/20">Active</Badge>
             </div>
+            <div className="flex items-center justify-between">
+              <span>Database Connection</span>
+              <Badge className="bg-success/10 text-success border-success/20">Active</Badge>
+            </div>
             <Dialog open={isConfigOpen} onOpenChange={setIsConfigOpen}>
               <DialogTrigger asChild>
                 <Button className="w-full bg-gradient-accent hover:shadow-accent">
@@ -76,7 +87,7 @@ export default function ThreeCXStatus() {
                 <DialogHeader>
                   <DialogTitle className="flex items-center gap-2">
                     <Phone className="w-5 h-5 text-accent" />
-                    3CX Integration Configuration
+                    Vicidial Integration Configuration
                   </DialogTitle>
                 </DialogHeader>
                 
@@ -91,9 +102,23 @@ export default function ThreeCXStatus() {
                         name="serverUrl"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>3CX Server URL</FormLabel>
+                            <FormLabel>Vicidial Server URL</FormLabel>
                             <FormControl>
-                              <Input placeholder="https://your-3cx-server.com" {...field} />
+                              <Input placeholder="https://your-vicidial-server.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="apiUrl"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>API Endpoint</FormLabel>
+                            <FormControl>
+                              <Input placeholder="https://your-vicidial-server.com/vicidial/api.php" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -103,12 +128,12 @@ export default function ThreeCXStatus() {
                       <div className="grid grid-cols-2 gap-4">
                         <FormField
                           control={form.control}
-                          name="username"
+                          name="apiUser"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Username</FormLabel>
+                              <FormLabel>API User</FormLabel>
                               <FormControl>
-                                <Input placeholder="admin" {...field} />
+                                <Input placeholder="API username" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -117,12 +142,47 @@ export default function ThreeCXStatus() {
                         
                         <FormField
                           control={form.control}
-                          name="password"
+                          name="apiPassword"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Password</FormLabel>
+                              <FormLabel>API Password</FormLabel>
                               <FormControl>
                                 <Input type="password" placeholder="••••••••" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Database Settings */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-foreground">Database Settings</h3>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="dbServer"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Database Server</FormLabel>
+                              <FormControl>
+                                <Input placeholder="localhost or IP" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={form.control}
+                          name="dbPort"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Port</FormLabel>
+                              <FormControl>
+                                <Input placeholder="3306" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -132,17 +192,47 @@ export default function ThreeCXStatus() {
                       
                       <FormField
                         control={form.control}
-                        name="apiKey"
+                        name="dbName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>API Key</FormLabel>
+                            <FormLabel>Database Name</FormLabel>
                             <FormControl>
-                              <Input placeholder="Enter your 3CX API key" {...field} />
+                              <Input placeholder="asterisk" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="dbUser"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>DB Username</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Database user" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={form.control}
+                          name="dbPassword"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>DB Password</FormLabel>
+                              <FormControl>
+                                <Input type="password" placeholder="••••••••" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
 
                     {/* Integration Features */}
@@ -156,9 +246,9 @@ export default function ThreeCXStatus() {
                           render={({ field }) => (
                             <FormItem className="flex flex-row items-center justify-between rounded-lg border border-glass-border p-3">
                               <div className="space-y-0.5">
-                                <FormLabel>Auto Sync Accounts</FormLabel>
+                                <FormLabel>Auto Sync Leads</FormLabel>
                                 <div className="text-sm text-muted-foreground">
-                                  Automatically sync accounts to 3CX
+                                  Sync accounts to Vicidial leads
                                 </div>
                               </div>
                               <FormControl>
@@ -188,13 +278,13 @@ export default function ThreeCXStatus() {
                         
                         <FormField
                           control={form.control}
-                          name="popupOnCall"
+                          name="screenPopup"
                           render={({ field }) => (
                             <FormItem className="flex flex-row items-center justify-between rounded-lg border border-glass-border p-3">
                               <div className="space-y-0.5">
-                                <FormLabel>Popup on Call</FormLabel>
+                                <FormLabel>Screen Popup</FormLabel>
                                 <div className="text-sm text-muted-foreground">
-                                  Show customer info during calls
+                                  Show lead info on calls
                                 </div>
                               </div>
                               <FormControl>
@@ -212,7 +302,7 @@ export default function ThreeCXStatus() {
                               <div className="space-y-0.5">
                                 <FormLabel>Record Calls</FormLabel>
                                 <div className="text-sm text-muted-foreground">
-                                  Attach recordings to accounts
+                                  Attach recordings to leads
                                 </div>
                               </div>
                               <FormControl>
@@ -224,25 +314,40 @@ export default function ThreeCXStatus() {
                       </div>
                     </div>
 
-                    {/* Dialer Settings */}
+                    {/* Campaign Settings */}
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-foreground">Dialer Settings</h3>
+                      <h3 className="text-lg font-semibold text-foreground">Campaign Settings</h3>
+                      
+                      <FormField
+                        control={form.control}
+                        name="campaignId"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Campaign ID</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Enter Vicidial campaign ID" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                       
                       <FormField
                         control={form.control}
                         name="dialerMode"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Dialer Mode</FormLabel>
+                            <FormLabel>Dial Method</FormLabel>
                             <FormControl>
                               <select 
                                 {...field} 
                                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                               >
-                                <option value="preview">Preview Dialer</option>
-                                <option value="progressive">Progressive Dialer</option>
-                                <option value="predictive">Predictive Dialer</option>
-                                <option value="manual">Manual Dialer</option>
+                                <option value="MANUAL">Manual Dial</option>
+                                <option value="RATIO">Auto Dial (Ratio)</option>
+                                <option value="ADAPT_HARD_LIMIT">Predictive Dial</option>
+                                <option value="ADAPT_AVERAGE">Adaptive Average</option>
+                                <option value="INBOUND_MAN">Inbound Manual</option>
                               </select>
                             </FormControl>
                             <FormMessage />
@@ -295,16 +400,20 @@ export default function ThreeCXStatus() {
 
         <Card className="glass-card">
           <CardHeader>
-            <CardTitle>Call Statistics</CardTitle>
+            <CardTitle>Campaign Statistics</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Active Lines</span>
-              <span className="font-mono font-bold">12/20</span>
+              <span className="text-muted-foreground">Active Agents</span>
+              <span className="font-mono font-bold">15/25</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Queue Length</span>
-              <span className="font-mono font-bold">3</span>
+              <span className="text-muted-foreground">Leads in Hopper</span>
+              <span className="font-mono font-bold">247</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Calls Today</span>
+              <span className="font-mono font-bold">1,284</span>
             </div>
           </CardContent>
         </Card>
