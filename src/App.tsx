@@ -22,6 +22,7 @@ import Settings from "./pages/Settings";
 import Documentation from "./pages/Documentation";
 import VicidialIntegration from "./pages/integrations/VicidialIntegration";
 import DatabaseIntegration from "./pages/integrations/Database";
+import Leads from "./pages/Leads";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -66,6 +67,7 @@ const App = () => {
                   <Route path="/agent-dashboard" element={<AgentDashboard />} />
                   <Route path="/manager-dashboard" element={<ManagerDashboard />} />
                   <Route path="/accounts" element={<Accounts />} />
+                  <Route path="/leads" element={<Leads />} />
                   <Route path="/calls" element={<CallCenter />} />
                   <Route path="/dispositions" element={<Dispositions />} />
                   <Route path="/upload" element={<UploadData />} />
