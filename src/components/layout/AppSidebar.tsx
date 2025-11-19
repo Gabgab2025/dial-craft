@@ -18,7 +18,8 @@ import {
   Calendar,
   MapPin,
   Clock,
-  Bell
+  Bell,
+  UserPlus
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import {
@@ -51,6 +52,7 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   { title: "Dashboard", url: "/dashboard", icon: Home, roles: ["admin", "manager", "agent"] },
   { title: "Accounts", url: "/accounts", icon: Users, roles: ["admin", "manager", "agent"] },
+  { title: "Leads", url: "/leads", icon: UserPlus, roles: ["admin", "manager", "agent"] },
   { title: "Call Center", url: "/calls", icon: Phone, roles: ["admin", "manager", "agent"] },
   { title: "Dispositions", url: "/dispositions", icon: FileText, roles: ["admin", "manager"] },
   { title: "Upload Data", url: "/upload", icon: Upload, roles: ["admin", "manager"] },
